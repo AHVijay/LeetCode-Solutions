@@ -149,6 +149,62 @@ Write a solution to find the number of times each student attended each exam.
 Return the result table ordered by student_id and subject_name.
 
 Approach:
-Use LEFT JOIN to join the two tables and show the number of times each student attended each exam.
+Use CROSS JOIN and LEFT JOIN to join the two tables and show the number of times each student attended each exam.
+*/
+
+SELECT
+    s.student_id, s.student_name, sub.subject_name, COUNT(e.subject_name) as attended_exams
+FROM
+    students s
+CROSS JOIN subjects_subject_name
+LEFT JOIN examinations e 
+    ON s.student_id = e.student_id 
+    and sub.subject_name = e.subject_name
+GROUP BY
+    s.student_id, 
+    sub.subject_name,
+    s.student_name
+ORDER BY
+    s.student_id, 
+    sub.subject_name;
+
+
+
+/*
+13) Problem: Managers with atleast 5 direct reports
+LeetCode: https://leetcode.com/problems/managers-with-at-least-5-direct-reports/description/?envType=study-plan-v2&envId=top-sql-50
+
+Description:
+Write a solution to find managers with at least five direct reports.
+
+Return the result table in any order.
+
+Approach:
+Use GROUP BY and HAVING with SUBQUERY to find managers with at least five direct reports.
+*/
+
+SELECT name
+FROM 
+    Employee
+WHERE 
+    id IN (
+        SELECT managerId 
+        FROM Employee 
+        GROUP BY managerId 
+        HAVING COUNT(*) >= 5);
+
+
+/*
+14) Problem: Confirmation Rate
+LeetCode: https://leetcode.com/problems/confirmation-rate/description/?envType=study-plan-v2&envId=top-sql-50
+
+Description:
+The confirmation rate of a user is the number of 'confirmed' messages divided by the total number of requested confirmation messages. 
+The confirmation rate of a user that did not request any confirmation messages is 0. Round the confirmation rate to two decimal places.
+Write a solution to find the confirmation rate of each user.
+Return the result table in any order.
+
+Approach:
+Use 
 */
 
