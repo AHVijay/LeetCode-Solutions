@@ -78,12 +78,10 @@ Use INNER JOIN to join the two tables and show the id of the dates with higher t
 
 SELECT 
     w1.id
-FROM 
-    Weather w1
-INNER JOIN Weather w2 ON w1.recordDate = DATE_ADD(w2.recordDate, INTERVAL 1 DAY)
-WHERE 
-    w1.temperature > w2.temperature;
-
+FROM Weather w1
+JOIN weather w2 
+    ON w1.recordDate = w2.recordDate + INTERVAL 1 day
+        where w1.temperature > w2.temperature;
 
 
 /*
