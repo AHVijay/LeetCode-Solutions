@@ -110,3 +110,45 @@ INNER JOIN Activity b
     and b.activity_type = 'end'
 GROUP BY
     a.machine_id;
+
+
+
+/*
+11) Problem: Employee Bonus
+LeetCode: https://leetcode.com/problems/employee-bonus/?envType=study-plan-v2&envId=top-sql-50
+
+Description:
+Write a solution to report the name and bonus amount of each employee who satisfies either of the following:
+
+The employee has a bonus less than 1000.
+The employee did not get any bonus.
+Return the result table in any order.
+
+Return the result table in any order.
+
+Approach:
+Use LEFT JOIN to join the two tables and show the name and bonus amount of each employee who satisfies either of the following:
+*/
+
+SELECT 
+    e.name, b.bonus
+FROM 
+    Employee e
+LEFT JOIN Bonus b ON e.empId = b.empId
+WHERE 
+    b.bonus < 1000 OR b.bonus IS NULL;
+
+
+/*
+12) Problem: Students and Examinations
+LeetCode: https://leetcode.com/problems/students-and-examinations/description/?envType=study-plan-v2&envId=top-sql-50
+
+Description:
+Write a solution to find the number of times each student attended each exam.
+
+Return the result table ordered by student_id and subject_name.
+
+Approach:
+Use LEFT JOIN to join the two tables and show the number of times each student attended each exam.
+*/
+
