@@ -173,3 +173,64 @@ Time Complexity: O(...)
 Space Complexity: O(...)
 """
 
+def dice_statistics(n: int) -> tuple[float, float]:
+   
+   expected_value = (n + 1) / 2
+   variance = (n **2 - 1) / 12
+
+   return (expected_value, variance)
+
+
+"""
+5) Problem: Sampling Distribution of the Mean
+Deep-ML: https://www.deep-ml.com/problems/181
+Difficulty: Easy
+
+
+Description:
+
+Write a Python function that demonstrates the sampling distribution of the mean. 
+The function should take as input the number of samples, the sample size, and the distribution type ('uniform' or 'exponential'). 
+It should return the mean of the sample means.
+
+Requirements
+For 'uniform': Draw from Uniform(0, 1) using np.random.uniform(0, 1, sample_size)
+For 'exponential': Draw from Exponential with scale=1 using np.random.exponential(1, sample_size)
+Generate num_samples independent samples, each of size sample_size
+Compute the mean of each sample, then return the mean of all sample means
+
+Examples:
+Input:
+simulate_clt(num_samples=1000, sample_size=30, distribution='uniform')
+Output:
+0.4996
+
+Approach:
+My approach is to first generate the number of samples with the given sample size and distribution. 
+Then, I calculate the mean of each sample. 
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import numpy as np
+
+def simulate_clt(num_samples: int, sample_size: int, distribution: str = 'uniform') -> float:
+
+    if num_samples <= 0 or sample_size <= 0:
+        raise ValueError("num_samples and sample_size must be positive")
+
+    sample_means = []
+
+    for _ in range(num_samples):
+        if distribution == "uniform":
+            sample = np.random.uniform(0, 1, sample_size)
+        elif distribution == "exponential":
+            sample = np.random.exponential(1, sample_size)
+        else:
+            raise ValueError("distribution must be 'uniform' or 'exponential'")
+
+        sample_means.append(sample.mean())
+
+    return float(np.mean(sample_means))
