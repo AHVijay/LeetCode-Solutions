@@ -282,3 +282,48 @@ def bayes_theorem(priors: list[float], likelihoods: list[float]) -> list[float]:
         raise ValueError("Total evidence probability is zero")
 
     return [u / evidence for u in unnormalized]
+
+
+"""
+7) Problem: Binomial Distribution Probability
+Deep-ML: https://www.deep-ml.com/problems/79
+Difficulty: Medium
+
+
+Description:
+
+Write a Python function to calculate the probability of achieving exactly k successes in n independent Bernoulli trials, 
+each with probability p of success, using the Binomial distribution formula.
+
+Examples:
+Input:
+n = 6, k = 2, p = 0.5
+Output:
+0.23438
+
+Approach:
+My approach is to first calculate the binomial coefficient. 
+Then, I calculate the probability of k successes and n-k failures. 
+Then, I multiply the binomial coefficient by the probability of k successes and n-k failures.
+
+Formula: 
+P(X = k) = (n choose k) * p^k * (1-p)^(n-k)
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+
+import math
+
+def binomial_probability(n: int, k: int, p: float) -> float:
+
+    if not 0 <= p <= 1:
+        raise ValueError("p must be between 0 and 1")
+
+    if k < 0 or k > n:
+        return 0.0
+
+    coefficient = math.comb(n, k)
+    return coefficient * (p ** k) * ((1 - p) ** (n - k))
