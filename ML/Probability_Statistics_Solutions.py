@@ -234,3 +234,51 @@ def simulate_clt(num_samples: int, sample_size: int, distribution: str = 'unifor
         sample_means.append(sample.mean())
 
     return float(np.mean(sample_means))
+
+
+"""
+6) Problem: Compute posterior probability using Bayes' Theorem
+Deep-ML: https://www.deep-ml.com/problems/336
+Difficulty: Easy
+
+
+Description:
+
+Implement a function that calculates posterior probabilities for multiple hypotheses given observed evidence using Bayes' Theorem. 
+Given a list of prior probabilities P(H_i) for each hypothesis and a list of likelihoods P(E|H_i) representing the probability of observing the evidence under each hypothesis, 
+compute the posterior probabilities P(H_i|E) for all hypotheses. The priors list contains the initial belief in each hypothesis before observing evidence, 
+and the likelihoods list contains the probability of the observed evidence assuming each hypothesis is true. The function should return a list of posterior probabilities that sum to 1.
+
+Examples:
+Input:
+priors = [0.01, 0.99], likelihoods = [0.95, 0.05]
+Output:
+[0.161, 0.839]
+
+Approach:
+My approach is to first calculate the evidence P(E) using the prior probabilities and likelihoods. 
+Then, I calculate the posterior probabilities using Bayes' Theorem.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+def bayes_theorem(priors: list[float], likelihoods: list[float]) -> list[float]:
+	
+    if not priors or not likelihoods:
+        return []
+
+    if len(priors) != len(likelihoods):
+        raise ValueError("priors and likelihoods must have the same length")
+
+    unnormalized = [
+        p * l for p, l in zip(priors, likelihoods)
+    ]
+
+    evidence = sum(unnormalized)
+
+    if evidence == 0:
+        raise ValueError("Total evidence probability is zero")
+
+    return [u / evidence for u in unnormalized]
