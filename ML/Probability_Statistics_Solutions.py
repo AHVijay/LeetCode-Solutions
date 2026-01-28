@@ -327,3 +327,86 @@ def binomial_probability(n: int, k: int, p: float) -> float:
 
     coefficient = math.comb(n, k)
     return coefficient * (p ** k) * ((1 - p) ** (n - k))
+
+
+"""
+8) Problem: Normal Distribution PDF Calculator
+Deep-ML: http://deep-ml.com/problems/80
+Difficulty: Medium
+
+
+Description:
+
+Write a Python function to calculate the probability density function (PDF) of the normal distribution for a given value, mean, and standard deviation. 
+The function should use the mathematical formula of the normal distribution to return the PDF value rounded to 5 decimal places.
+
+Examples:
+Input:
+x = 16, mean = 15, std_dev = 2.04
+Output:
+0.17342
+
+Approach:
+My approach is to use the scipy.stats.norm.pdf() function to calculate the PDF value.
+
+Formula: 
+P(X = k) = (n choose k) * p^k * (1-p)^(n-k)
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import numpy as np
+from scipy.stats import norm
+
+def normal_pdf(x: float, mean: float, std_dev: float) -> float:
+    return round(norm.pdf(x, mean, std_dev), 5)
+
+
+"""
+9) Problem: Simulate Markov Chain
+Deep-ML: https://www.deep-ml.com/problems/132
+Difficulty: Medium
+
+
+Description:
+
+Implement a function to simulate a Markov Chain. The function should take a 2D numpy array representing the transition matrix
+(where each row sums to 1), an integer for the initial state index, and an integer for the number of steps to simulate. 
+It should return a numpy array containing the sequence of state indices over time, 
+including the initial state. Use numpy for array operations and random selections.
+
+Examples:
+Input:
+transition_matrix = np.array([[0.8, 0.2], [0.3, 0.7]]); print(simulate_markov_chain(transition_matrix, 0, 3))
+Output:
+[0 0 1 1]
+
+Approach:
+My approach is to select the next state based on the current state and the transition matrix.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import numpy as np
+def simulate_markov_chain(transition_matrix, initial_state, num_steps):
+    if num_steps < 0:
+        raise ValueError("steps must be non-negative")
+
+    num_states = transition_matrix.shape[0]
+    states = np.empty(num_steps + 1, dtype=int)
+    states[0] = initial_state
+
+    current_state = initial_state
+
+    for i in range(1, num_steps + 1):
+        current_state = np.random.choice(
+            num_states,
+            p=transition_matrix[current_state]
+        )
+        states[i] = current_state
+
+    return states
