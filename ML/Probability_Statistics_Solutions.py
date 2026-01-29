@@ -410,3 +410,58 @@ def simulate_markov_chain(transition_matrix, initial_state, num_steps):
         states[i] = current_state
 
     return states
+
+
+    """
+10) Problem: Calculate KL Divergence Between Two Multivariate Gaussian Distributions
+Deep-ML: https://www.deep-ml.com/problems/136
+Difficulty: Medium
+
+
+Description:
+
+KL divergence measures the dissimilarity between two probability distributions. 
+In this problem, you'll implement a function to compute the KL divergence between two multivariate Gaussian distributions given their means and covariance matrices. 
+Use the provided mathematical formulas and numerical considerations to ensure accuracy.
+
+Examples:
+Input:
+mu_p, Cov_p, mu_q, Cov_q for two random multivariate Gaussians
+Output:
+A float representing the KL divergence
+
+Approach:
+My approach is to use the formula for KL divergence between two multivariate Gaussian distributions.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import numpy as np
+
+def multivariate_kl_divergence(mu_p: np.ndarray, Cov_p: np.ndarray, mu_q: np.ndarray, Cov_q: np.ndarray) -> float:
+    mu_p = np.asarray(mu_p)
+    mu_q = np.asarray(mu_q)
+    Cov_p = np.asarray(Cov_p)
+    Cov_q = np.asarray(Cov_q)
+
+    d = mu_p.shape[0]
+
+    Cov_q_inv = np.linalg.inv(Cov_q)
+
+    sign_q, logdet_q = np.linalg.slogdet(Cov_q)
+    sign_p, logdet_p = np.linalg.slogdet(Cov_p)
+
+    if sign_q <= 0 or sign_p <= 0:
+        raise ValueError("Covariance matrices must be positive definite")
+
+    log_det_term = logdet_q - logdet_p
+    trace_term = np.trace(Cov_q_inv @ Cov_p)
+
+    mean_diff = mu_q - mu_p
+    mahalanobis_term = mean_diff.T @ Cov_q_inv @ mean_diff
+
+    kl = 0.5 * (log_det_term - d + trace_term + mahalanobis_term)
+
+    return float(kl)
