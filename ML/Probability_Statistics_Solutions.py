@@ -412,7 +412,7 @@ def simulate_markov_chain(transition_matrix, initial_state, num_steps):
     return states
 
 
-    """
+"""
 10) Problem: Calculate KL Divergence Between Two Multivariate Gaussian Distributions
 Deep-ML: https://www.deep-ml.com/problems/136
 Difficulty: Medium
@@ -465,3 +465,33 @@ def multivariate_kl_divergence(mu_p: np.ndarray, Cov_p: np.ndarray, mu_q: np.nda
     kl = 0.5 * (log_det_term - d + trace_term + mahalanobis_term)
 
     return float(kl)
+
+
+"""
+11) Problem: Chi-square Probability Distribution
+Deep-ML: https://www.deep-ml.com/problems/176
+Difficulty: Medium
+
+
+Description:
+
+Calculate the probability of occurrence of x in a Chi-Squared distribution with the given sample value 'x' and degrees of freedom 'k'.
+
+Examples:
+Input:
+x = 2, k = 2
+Output:
+0.184
+
+Approach:
+My approach is to use the scipy.stats.chi2.pdf() function to calculate the PDF value.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import math
+
+def chi_square_probability(x, k):
+    return round((x ** (k / 2 - 1) * math.exp(-x / 2)) / (2 ** (k / 2) * math.gamma(k / 2)), 3)
