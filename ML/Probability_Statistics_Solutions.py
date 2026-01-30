@@ -495,3 +495,41 @@ import math
 
 def chi_square_probability(x, k):
     return round((x ** (k / 2 - 1) * math.exp(-x / 2)) / (2 ** (k / 2) * math.gamma(k / 2)), 3)
+
+
+"""
+12) Problem: Conditional Probability from Joint Distribution
+Deep-ML: https://www.deep-ml.com/problems/180
+Difficulty: Medium
+
+
+Description:
+
+Write a Python function that computes the conditional probability P(A|B), 
+given a joint probability distribution over events A and B. 
+The distribution is provided as a dictionary with keys ('A','B'), ('A','B'), ('A','B'), ('A','B'), 
+where the backtick ` denotes logical NOT.
+
+Examples:
+Input:
+conditional_probability({('A','B'):0.2, ('A','`B'):0.3, ('`A','B'):0.1, ('`A','`B'):0.4})
+Output:
+0.6667
+
+Approach:
+My approach is to use the formula for conditional probability.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+def conditional_probability(joint_distribution: dict) -> float:
+	
+	# Your code here
+    P_A_and_B = joint_distribution[('A', 'B')]
+    P_B = (
+        joint_distribution[('A', 'B')]
+        + joint_distribution[('`A', 'B')]
+    )
+    return P_A_and_B / P_B
