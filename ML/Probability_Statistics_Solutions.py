@@ -607,3 +607,66 @@ def simulate_clt(
         "mean": float(np.mean(z_scores)),
         "std": float(np.std(z_scores, ddof=1))
     }
+
+
+"""
+14) Problem: Compute Covariance from Joint Probability Mass Function
+Deep-ML: https://www.deep-ml.com/problems/243
+Difficulty: Medium
+
+
+Description:
+
+Given two discrete random variables X and Y with their possible values and joint probability mass function (PMF), 
+compute the covariance between X and Y.
+
+The covariance measures the linear relationship between two random variables. 
+A positive covariance indicates that the variables tend to increase together, while a negative covariance indicates that when one increases, 
+the other tends to decrease.
+
+Your Task: Write a function covariance_from_joint_pmf(x_values, y_values, joint_pmf) that takes:
+
+x_values: A list of possible values for random variable X
+y_values: A list of possible values for random variable Y
+joint_pmf: A 2D numpy array where joint_pmf[i][j] represents P(X=x_values[i], Y=y_values[j])
+The function should return the covariance Cov(X, Y) as a float.
+
+Note: You will need to compute marginal probabilities from the joint PMF and then calculate the expected values needed for the covariance formula.
+
+Examples:
+Input:
+x_values = [0, 1], y_values = [0, 1], joint_pmf = [[0.4, 0.1], [0.1, 0.4]]
+Output:
+0.15
+
+Approach:
+My approach is to use the formula for covariance.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import numpy as np
+
+def covariance_from_joint_pmf(x_values: list, y_values: list, joint_pmf: np.ndarray) -> float:
+    x = np.asarray(x_values)
+    y = np.asarray(y_values)
+    joint_pmf = np.asarray(joint_pmf)
+
+    # Marginal distributions
+    px = joint_pmf.sum(axis=1)
+    py = joint_pmf.sum(axis=0)
+
+    # Expectations
+    ex = np.sum(x * px)
+    ey = np.sum(y * py)
+
+    # E[XY]
+    exy = 0.0
+    for i in range(len(x)):
+        for j in range(len(y)):
+            exy += x[i] * y[j] * joint_pmf[i, j]
+
+    return float(exy - ex * ey)
+
