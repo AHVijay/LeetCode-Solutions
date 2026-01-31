@@ -533,3 +533,77 @@ def conditional_probability(joint_distribution: dict) -> float:
         + joint_distribution[('`A', 'B')]
     )
     return P_A_and_B / P_B
+
+
+"""
+13) Problem: Central Limit Theorem Simulation
+Deep-ML: https://www.deep-ml.com/problems/182
+Difficulty: Medium
+
+
+Description:
+
+Write a Python function to demonstrate the Central Limit Theorem (CLT). 
+Your function should draw many samples from a chosen distribution, 
+compute their sample means, standardize them to Z-scores, and return the mean and standard deviation of these standardized values. 
+The implementation should handle at least the following distributions: Uniform(0,1), Exponential(scale=1.0), and Bernoulli(p=0.3).
+
+Examples:
+Input:
+simulate_clt('exponential', n=30, runs=10000, seed=42)
+Output:
+{'mean': -0.003, 'std': 1.002}
+
+Approach:
+My approach is to first generate the number of samples with the given sample size and distribution. 
+Then, I calculate the mean of each sample. Then, I standardize the mean of each sample. 
+Finally, I calculate the mean and standard deviation of the standardized values.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import numpy as np
+
+def simulate_clt(distribution: str, n: int, runs: int = 10000, seed: int = 42) -> dict:
+
+    import numpy as np
+
+def simulate_clt(
+    distribution: str,
+    n: int,
+    runs: int = 10000,
+    seed: int = 42
+) -> dict:
+    if n <= 0 or runs <= 0:
+        raise ValueError("n and runs must be positive")
+
+    np.random.seed(seed)
+
+    if distribution == "uniform":
+        mu = 0.5
+        sigma = np.sqrt(1 / 12)
+        samples = np.random.uniform(0, 1, size=(runs, n))
+
+    elif distribution == "exponential":
+        mu = 1.0
+        sigma = 1.0
+        samples = np.random.exponential(1.0, size=(runs, n))
+
+    elif distribution == "bernoulli":
+        p = 0.3
+        mu = p
+        sigma = np.sqrt(p * (1 - p))
+        samples = np.random.binomial(1, p, size=(runs, n))
+
+    else:
+        raise ValueError("Unsupported distribution")
+
+    sample_means = samples.mean(axis=1)
+    z_scores = (sample_means - mu) / (sigma / np.sqrt(n))
+
+    return {
+        "mean": float(np.mean(z_scores)),
+        "std": float(np.std(z_scores, ddof=1))
+    }
