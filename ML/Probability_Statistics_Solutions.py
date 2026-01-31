@@ -670,3 +670,49 @@ def covariance_from_joint_pmf(x_values: list, y_values: list, joint_pmf: np.ndar
 
     return float(exy - ex * ey)
 
+
+"""
+15) Compute Total Probability using Law of Total Probability
+Deep-ML: https://www.deep-ml.com/problems/244
+Difficulty: Medium
+
+
+Description:
+
+Implement a function to compute the total probability P(A) using the Law of Total Probability.
+
+The Law of Total Probability allows us to calculate the probability of an event A by considering all possible scenarios (partition events) that could lead to A.
+
+Given:
+
+priors: A dictionary mapping partition event names to their probabilities P(Bi). These events must form a valid partition (mutually exclusive and exhaustive, summing to 1).
+conditionals: A dictionary mapping the same partition event names to the conditional probability P(A|Bi).
+Your function should return P(A), the total probability of event A occurring.
+
+Practical Context: Consider a factory with multiple production lines. Each line produces a different proportion of total output (priors), 
+and each line has a different defect rate (conditionals). 
+The law of total probability helps us find the overall defect rate across all production.
+
+Return the result rounded to 4 decimal places.
+Input:
+priors = {'B1': 0.3, 'B2': 0.7}, conditionals = {'B1': 0.2, 'B2': 0.5}
+Output:
+0.41
+
+Approach:
+My approach is to use the formula for the law of total probability.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+def law_of_total_probability(priors: dict, conditionals: dict) -> float:
+    if priors.keys() != conditionals.keys():
+        raise ValueError("Priors and conditionals must have the same keys")
+
+    total = 0.0
+    for key in priors:
+        total += priors[key] * conditionals[key]
+
+    return round(total, 4)
