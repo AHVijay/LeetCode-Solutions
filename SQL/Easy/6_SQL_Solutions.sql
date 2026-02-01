@@ -169,42 +169,101 @@ ORDER BY
     sub.subject_name;
 
 
-
 /*
-13) Problem: Managers with atleast 5 direct reports
-LeetCode: https://leetcode.com/problems/managers-with-at-least-5-direct-reports/description/?envType=study-plan-v2&envId=top-sql-50
+13) Problem: Not Boring Movies
+LeetCode: https://leetcode.com/problems/not-boring-movies/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+ Cinema
++----------------+----------+
+| Column Name    | Type     |
++----------------+----------+
+| id             | int      |
+| movie          | varchar  |
+| description    | varchar  |
+| rating         | float    |
++----------------+----------+
+id is the primary key (column with unique values) for this table.
+Each row contains information about the name of a movie, its genre, and its rating.
+rating is a 2 decimal places float in the range [0, 10]
 
 Description:
-Write a solution to find managers with at least five direct reports.
+Write a solution to report the movies with an odd-numbered ID and a description that is not "boring".
 
-Return the result table in any order.
+Return the result table ordered by rating in descending order.
+
 
 Approach:
-Use GROUP BY and HAVING with SUBQUERY to find managers with at least five direct reports.
+Use WHERE clause to filter the movies that have an odd-numbered ID and a description that is not "boring".
+Use ORDER BY to sort the result table by rating in descending order.
+
 */
 
-SELECT name
+SELECT 
+    id, movie, description, rating
 FROM 
-    Employee
+    Cinema
 WHERE 
-    id IN (
-        SELECT managerId 
-        FROM Employee 
-        GROUP BY managerId 
-        HAVING COUNT(*) >= 5);
+    id % 2 = 1 AND description != 'boring'
+ORDER BY 
+    rating DESC;
 
 
 /*
-14) Problem: Confirmation Rate
-LeetCode: https://leetcode.com/problems/confirmation-rate/description/?envType=study-plan-v2&envId=top-sql-50
+14) Problem: Average Selling Price
+LeetCode: https://leetcode.com/problems/average-selling-price/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+Prices
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| start_date    | date    |
+| end_date      | date    |
+| price         | int     |
++---------------+---------+
+(product_id, start_date, end_date) is the primary key (combination of columns with unique values) for this table.
+Each row of this table indicates the price of the product_id in the period from start_date to end_date.
+For each product_id there will be no two overlapping periods. That means there will be no two intersecting periods for the same product_id.
+ 
+
+Table: UnitsSold
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| purchase_date | date    |
+| units         | int     |
++---------------+---------+
+This table may contain duplicate rows.
+Each row of this table indicates the date, units, and product_id of each product sold.
 
 Description:
-The confirmation rate of a user is the number of 'confirmed' messages divided by the total number of requested confirmation messages. 
-The confirmation rate of a user that did not request any confirmation messages is 0. Round the confirmation rate to two decimal places.
-Write a solution to find the confirmation rate of each user.
+Write a solution to find the average selling price for each product. average_price should be rounded to 2 decimal places. 
+If a product does not have any sold units, its average selling price is assumed to be 0.
+
 Return the result table in any order.
 
+
 Approach:
-Use 
+Use LEFT JOIN to join the two tables and use CASE statement to find the average selling price for each product.
+
 */
 
+SELECT 
+    p.product_id,
+    ROUND(
+        IFNULL(
+            SUM(u.units * p.price) / SUM(u.units),
+            0
+        ),
+        2
+    ) AS average_price
+FROM Prices p
+LEFT JOIN UnitsSold u
+    ON p.product_id = u.product_id
+    AND u.purchase_date BETWEEN p.start_date AND p.end_date
+GROUP BY p.product_id;
