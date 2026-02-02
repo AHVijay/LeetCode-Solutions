@@ -716,3 +716,70 @@ def law_of_total_probability(priors: dict, conditionals: dict) -> float:
         total += priors[key] * conditionals[key]
 
     return round(total, 4)
+
+
+    
+"""
+16) Hypergeometric Distribution PMF
+Deep-ML: https://www.deep-ml.com/problems/245
+Difficulty: Medium
+
+
+Description:
+
+Implement a function to calculate the probability mass function (PMF) of the hypergeometric distribution.
+
+The hypergeometric distribution models the probability of obtaining exactly k successes in n draws, without replacement, 
+from a finite population of size N that contains exactly K success states.
+
+This distribution is commonly used in:
+
+Quality control (sampling defective items from a batch)
+Card games (drawing specific cards from a deck)
+Lottery calculations
+Ecological sampling (capture-recapture methods)
+Given:
+
+N: Total population size
+K: Number of success states in the population
+n: Number of draws (without replacement)
+k: Number of observed successes
+Your function should return the probability P(X = k) of getting exactly k successes.
+
+Note: If k is outside the valid range of possible outcomes, return 0.0.
+
+Return the result rounded to 4 decimal places.
+
+Input:
+hypergeometric_pmf(N=52, K=13, n=5, k=2)
+Output:
+0.2743
+
+Approach:
+My approach is to use the formula for the hypergeometric distribution.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+import math
+
+def hypergeometric_pmf(N: int, K: int, n: int, k: int) -> float:
+    if (
+        k < 0
+        or k > n
+        or k > K
+        or n > N
+        or n - k > N - K
+    ):
+        return 0.0
+
+    numerator = math.comb(K, k) * math.comb(N - K, n - k)
+    denominator = math.comb(N, n)
+
+    probability = numerator / denominator
+    return round(probability, 4)
+
+
+
