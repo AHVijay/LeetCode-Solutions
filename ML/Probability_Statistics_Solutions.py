@@ -782,4 +782,53 @@ def hypergeometric_pmf(N: int, K: int, n: int, k: int) -> float:
     return round(probability, 4)
 
 
+"""
+17) Birthday Problem Probability
+Deep-ML: https://www.deep-ml.com/problems/246
+Difficulty: Medium
 
+
+Description:
+
+Implement a function to calculate the probability that at least two people in a group of n people share the same birthday.
+
+The Birthday Problem (also known as the Birthday Paradox) is a famous probability puzzle that demonstrates how intuition about probability can be misleading. 
+It asks: in a group of n randomly chosen people, what is the probability that at least two of them share the same birthday?
+
+Assumptions:
+
+Birthdays are uniformly distributed across all days
+Each person's birthday is independent of others
+The default year has 365 days (leap years ignored unless specified)
+Your function should:
+
+Take n (number of people) and optionally days (number of days in a year, default 365)
+Return the probability that at least two people share a birthday
+Handle edge cases appropriately (n <= 1 means no possible match, n > days guarantees a match by the pigeonhole principle)
+Return the result rounded to 4 decimal places.
+
+Input:
+birthday_problem(23)
+Output:
+0.5073
+
+Approach:
+My approach is to use the formula for the hypergeometric distribution.
+
+
+Time Complexity: O(...)
+Space Complexity: O(...)
+"""
+
+def birthday_problem(n: int, days: int = 365) -> float:
+    if n <= 1:
+        return 0.0
+
+    if n > days:
+        return 1.0
+
+    prob_no_match = 1.0
+    for i in range(n):
+        prob_no_match *= (days - i) / days
+
+    return round(1 - prob_no_match, 4)
