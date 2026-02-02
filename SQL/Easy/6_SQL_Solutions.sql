@@ -351,9 +351,29 @@ Write a solution to find the percentage of the users registered in each contest 
 Return the result table ordered by percentage in descending order. In case of a tie, order it by contest_id in ascending order.
 
 Approach:
-Use LEFT JOIN to join the two tables and use CASE statement to find the average experience years of all the employees for each project.
+1) Use LEFT JOIN to join the two tables and use CASE statement to find the percentage of the users registered in each contest.
+2) Use CROSS JOIN to join the two tables and use CASE statement to find the percentage of the users registered in each contest.
 
 */
 
 SELECT
-    
+    r.contest_id, ROUND(COUNT(r.user_id) / (SELECT COUNT(*) FROM Users) * 100, 2) as percentage
+FROM
+    Register r
+LEFT JOIN Users u ON r.user_id = u.user_id
+GROUP BY r.contest_id
+ORDER BY percentage DESC, r.contest_id ASC;
+
+/*Another Approach: */
+
+WITH total_users AS (
+    SELECT COUNT(*) AS total
+    FROM Users
+)
+SELECT
+    r.contest_id,
+    ROUND(COUNT(r.user_id) / total_users.total * 100, 2) AS percentage
+FROM Register r
+CROSS JOIN total_users t
+GROUP BY r.contest_id, t.cnt
+ORDER BY percentage DESC, r.contest_id ASC;
