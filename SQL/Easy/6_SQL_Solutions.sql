@@ -425,4 +425,101 @@ WHERE query_name IS NOT NULL
 GROUP BY query_name;
 
 
+/*
+_______________________________________________________________________________________________________________
+18) Problem: Number of Unique Subjects Taught by Each Teacher
+LeetCode: https://leetcode.com/problems/number-of-unique-subjects-taught-by-each-teacher/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+Teacher
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| teacher_id  | int  |
+| subject_id  | int  |
+| dept_id     | int  |
++-------------+------+
+(subject_id, dept_id) is the primary key (combinations of columns with unique values) of this table.
+Each row in this table indicates that the teacher with teacher_id teaches the subject subject_id in the department dept_id.
+
+Description:
+
+Write a solution to calculate the number of unique subjects each teacher teaches in the university.
+
+Return the result table in any order.
+
+Approach:
+1) Use COUNT() and DISTINCT to find the number of unique subjects each teacher teaches.
+2) Use GROUP BY to group the result table by teacher_id.
+
+*/
+
+SELECT
+    teacher_id, COUNT(DISTINCT subject_id) AS cnt
+FROM
+    Teacher
+GROUP BY teacher_id;
+
+
+/*
+_______________________________________________________________________________________________________________
+19) Problem: User Activity for the Past 30 Days I
+LeetCode: https://leetcode.com/problems/user-activity-for-the-past-30-days-i/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+Activity
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| user_id       | int     |
+| session_id    | int     |
+| activity_date | date    |
+| activity_type | enum    |
++---------------+---------+
+This table may have duplicate rows.
+The activity_type column is an ENUM (category) of type ('open_session', 'end_session', 'scroll_down', 'send_message').
+The table shows the user activities for a social media website. 
+Note that each session belongs to exactly one user.
+
+Description:
+
+Write a solution to find the daily active user count for a period of 30 days ending 2019-07-27 inclusively. 
+A user was active on someday if they made at least one activity on that day.
+
+Return the result table in any order.
+
+Approach 1:
+1) Use BETWEEN to filter the rows where activity_date is between 2019-06-28 and 2019-07-27.
+2) Use COUNT() and DISTINCT to find the number of unique users for each day.
+3) Use GROUP BY to group the result table by activity_date.
+
+*/
+
+SELECT
+    activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM
+    Activity
+WHERE
+    activity_date BETWEEN '2019-06-28' AND '2019-07-27'
+GROUP BY activity_date;
+
+/*
+_______________________________________________________________________________________________________________
+Approach 2:
+1) Use DATEDIFF to filter the rows where activity_date is between 2019-07-27 and 2019-06-28.
+2) Use COUNT() and DISTINCT to find the number of unique users for each day.
+3) Use GROUP BY to group the result table by activity_date.
+*/
+
+SELECT
+    activity_date AS day, COUNT(DISTINCT user_id) AS active_users
+FROM
+    Activity
+WHERE
+    DATEDIFF('2019-07-27', activity_date) < 30
+GROUP BY activity_date;
+
+
 

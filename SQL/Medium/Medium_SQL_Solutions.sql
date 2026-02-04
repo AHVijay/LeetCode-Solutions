@@ -269,3 +269,46 @@ FROM (
 ) player_logins;
 
 
+/*
+_____________________________________________________________________________________________________________
+6) Problem: Product Sales Analysis III
+LeetCode: https://leetcode.com/problems/product-sales-analysis-iii/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+Sales
+
++-------------+-------+
+| Column Name | Type  |
++-------------+-------+
+| sale_id     | int   |
+| product_id  | int   |
+| year        | int   |
+| quantity    | int   |
+| price       | int   |
++-------------+-------+
+(sale_id, year) is the primary key (combination of columns with unique values) of this table.
+Each row records a sale of a product in a given year.
+A product may have multiple sales entries in the same year.
+Note that the per-unit price.
+
+Description:
+
+Write a solution to find all sales that occurred in the first year each product was sold.
+For each product_id, identify the earliest year it appears in the Sales table.
+Return all sales entries for that product in that year.
+Return a table with the following columns: product_id, first_year, quantity, and price.
+Return the result in any order.
+
+Approach 1:
+1) Use 
+*/
+
+
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use SUBQUERY to find the earliest login date of each player and the next day login date.
+2) Use CASE statement to find the number of players who logged in on the day immediately following their initial login.
+*/
+
