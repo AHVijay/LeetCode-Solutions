@@ -198,3 +198,74 @@ JOIN (
 ) first_orders
 ON d.customer_id = first_orders.customer_id
 AND d.order_date = first_orders.first_order_date;
+
+/*
+_____________________________________________________________________________________________________________
+5) Problem: Game Play Analysis IV
+LeetCode: https://leetcode.com/problems/game-play-analysis-iv/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+Activity
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| player_id    | int     |
+| device_id    | int     |
+| event_date   | date    |
+| games_played | int     |
++--------------+---------+
+(player_id, event_date) is the primary key (combination of columns with unique values) of this table.
+This table shows the activity of players of some games.
+Each row is a record of a player who logged in and played a number of games (possibly 0) before logging out on someday using some device.
+
+Description:
+
+Write a solution to report the fraction of players that logged in again on the day after the day they first logged in, rounded to 2 decimal places. 
+In other words, you need to determine the number of players who logged in on the day immediately following their initial login, and divide it by the number of total players.
+
+Approach 1:
+1) Use MIN() to find the earliest login date of each player.
+2) Use LEFT JOIN to join the two tables and find the number of players who logged in on the day immediately following their initial login.
+*/
+
+SELECT 
+    ROUND(COUNT(DISTINCT a2.player_id) / COUNT(DISTINCT a1.player_id), 2) AS fraction
+FROM (
+    SELECT 
+        player_id,
+        MIN(event_date) AS first_login
+    FROM Activity
+    GROUP BY player_id
+) a1
+LEFT JOIN Activity a2
+    ON a1.player_id = a2.player_id
+    AND a2.event_date = DATE_ADD(a1.first_login, INTERVAL 1 DAY);
+
+/*
+Approach 2:
+1) Use SUBQUERY to find the earliest login date of each player and the next day login date.
+2) Use CASE statement to find the number of players who logged in on the day immediately following their initial login.
+*/
+
+SELECT 
+    ROUND(
+        SUM(CASE WHEN next_day_login IS NOT NULL THEN 1 ELSE 0 END) / COUNT(*),
+        2
+    ) AS fraction
+FROM (
+    SELECT 
+        a1.player_id,
+        a1.first_login,
+        a2.event_date AS next_day_login
+    FROM (
+        SELECT player_id, MIN(event_date) AS first_login
+        FROM Activity
+        GROUP BY player_id
+    ) a1
+    LEFT JOIN Activity a2
+        ON a1.player_id = a2.player_id
+        AND a2.event_date = DATE_ADD(a1.first_login, INTERVAL 1 DAY)
+) player_logins;
+
+
