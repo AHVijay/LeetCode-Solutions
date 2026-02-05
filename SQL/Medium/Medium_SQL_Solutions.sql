@@ -300,15 +300,44 @@ Return a table with the following columns: product_id, first_year, quantity, and
 Return the result in any order.
 
 Approach 1:
-1) Use 
+1) Use MIN() to find the earliest year each product was sold.
+2) Use JOIN to join the two tables and find all sales that occurred in the first year each product was sold.
 */
 
-
+SELECT 
+    s.product_id,
+    s.year AS first_year,
+    s.quantity,
+    s.price
+FROM Sales s
+JOIN (
+    SELECT product_id, MIN(year) AS first_year
+    FROM Sales
+    GROUP BY product_id
+) first_years
+ON s.product_id = first_years.product_id
+AND s.year = first_years.first_year;
 
 /*
 _____________________________________________________________________________________________________________
 Approach 2:
-1) Use SUBQUERY to find the earliest login date of each player and the next day login date.
-2) Use CASE statement to find the number of players who logged in on the day immediately following their initial login.
+1) Use Window function RANK() to assign a rank to each year for each product.
+2) Use WHERE clause to filter out the rows where year_rank is 1.
 */
+
+SELECT 
+    product_id,
+    year AS first_year,
+    quantity,
+    price
+FROM (
+    SELECT 
+        product_id,
+        year,
+        quantity,
+        price,
+        RANK() OVER(PARTITION BY product_id ORDER BY year) AS year_rank
+    FROM Sales
+) ranked
+WHERE year_rank = 1;
 
