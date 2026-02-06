@@ -645,3 +645,57 @@ SELECT ISNULL(
     ORDER BY num DESC),
     NULL
 ) AS num;
+
+
+/*
+*Advanced SELECT and JOIN concepts*
+_______________________________________________________________________________________________________________
+23) Problem: The Number of Employees Which Report to Each Employee
+LeetCode: https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Employees
++-------------+----------+
+| Column Name | Type     |
++-------------+----------+
+| employee_id | int      |
+| name        | varchar  |
+| reports_to  | int      |
+| age         | int      |
++-------------+----------+
+employee_id is the column with unique values for this table.
+This table contains information about the employees and the id of the manager they report to. 
+Some employees do not report to anyone (reports_to is null). 
+
+Description:
+
+For this problem, we will consider a manager an employee who has at least 1 other employee reporting to them.
+
+Write a solution to report the ids and the names of all managers, the number of employees who report directly to them, 
+and the average age of the reports rounded to the nearest integer.
+
+Return the result table ordered by employee_id.
+
+Approach 1: MYSQL APPROACH
+1) Use INNER JOIN to join the two tables and find the number of employees who report directly to each manager.
+2) Use GROUP BY to group the result table by employee_id and name.
+3) Use ROUND to round the average age to the nearest integer.
+4) Use ORDER BY to sort the result table by employee_id.
+*/
+
+SELECT 
+    m.employee_id,
+    m.name,
+    COUNT(e.employee_id) AS reports_count,
+    ROUND(AVG(e.age)) AS average_age
+FROM Employees m
+INNER JOIN Employees e
+    ON m.employee_id = e.reports_to
+GROUP BY m.employee_id, m.name
+ORDER BY m.employee_id;
+/*
+_______________________________________________________________________________________________________________
+Approach 2: SQL SERVER APPROACH
+1) Use 
+
