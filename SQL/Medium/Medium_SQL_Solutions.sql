@@ -240,7 +240,7 @@ FROM (
 ) a1
 LEFT JOIN Activity a2
     ON a1.player_id = a2.player_id
-    AND a2.event_date = DATE_ADD(a1.first_login, INTERVAL 1 DAY);
+    AND a2.event_date = DATEADD(day, 1, a1.first_login);
 
 /*
 Approach 2:
@@ -265,7 +265,7 @@ FROM (
     ) a1
     LEFT JOIN Activity a2
         ON a1.player_id = a2.player_id
-        AND a2.event_date = DATE_ADD(a1.first_login, INTERVAL 1 DAY)
+        AND a2.event_date = DATEADD(day, 1, a1.first_login)
 ) player_logins;
 
 

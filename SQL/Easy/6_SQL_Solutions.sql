@@ -592,3 +592,56 @@ FROM
     Followers
 GROUP BY user_id
 ORDER BY user_id;
+
+
+/*
+_______________________________________________________________________________________________________________
+22) Problem: Biggest Single Number
+LeetCode: https://leetcode.com/problems/biggest-single-number/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+MyNumbers
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| num         | int  |
++-------------+------+
+This table may contain duplicates (In other words, there is no primary key for this table in SQL).
+Each row of this table contains an integer.
+
+Description:
+
+A single number is a number that appeared only once in the MyNumbers table.
+Find the largest single number. If there is no single number, report null.
+
+Approach 1: MYSQL APPROACH
+1) Use GROUP BY to group the result table by num.
+2) Use HAVING to filter the numbers that appear only once.
+3) Use MAX() to find the largest single number.
+*/
+
+SELECT MAX(num) AS num
+FROM (
+    SELECT num
+FROM MyNumbers
+GROUP BY num
+HAVING COUNT(*) =1
+) AS t;
+
+/*
+_______________________________________________________________________________________________________________
+Approach 2: SQL SERVER APPROACH
+1) Use TOP 1 to find the largest single number.
+2) Use ORDER BY to sort the result table by num in descending order.
+3) Use ISNULL to replace NULL with 0.
+*/
+
+SELECT ISNULL(
+    (SELECT TOP 1 num
+    FROM MyNumbers
+    GROUP BY num
+    HAVING COUNT(*) = 1
+    ORDER BY num DESC),
+    NULL
+) AS num;
