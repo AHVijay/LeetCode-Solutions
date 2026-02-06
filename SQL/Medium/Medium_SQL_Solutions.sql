@@ -341,3 +341,67 @@ FROM (
 ) ranked
 WHERE year_rank = 1;
 
+
+/*
+_____________________________________________________________________________________________________________
+7) Problem: Customer Who bought all products
+LeetCode: https://leetcode.com/problems/customers-who-bought-all-products/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Customer
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| customer_id | int     |
+| product_key | int     |
++-------------+---------+
+This table may contain duplicates rows. 
+customer_id is not NULL.
+product_key is a foreign key (reference column) to Product table.
+
+Product
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| product_key | int     |
++-------------+---------+
+product_key is the primary key (column with unique values) for this table
+
+Description:
+
+Write a solution to report the customer ids from the Customer table that bought all the products in the Product table.
+Return the result table in any order.
+
+Approach 1:
+1) Use COUNT() to find the number of products each customer bought.
+2) Use COUNT(*) to find the number of products in the Product table.
+3) Use HAVING clause to filter out the customers who bought all the products.
+*/
+
+SELECT 
+    c.customer_id
+FROM Customer c
+GROUP BY c.customer_id
+HAVING COUNT(DISTINCT c.product_key) = (
+    SELECT COUNT(*) FROM Product
+);
+    
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use NOT EXISTS to filter out the customers who did not buy all the products.
+*/
+
+SELECT DISTINCT c.customer_id
+FROM Customer c
+WHERE NOT EXISTS (
+    SELECT p.product_key
+    FROM Product p
+    WHERE NOT EXISTS (
+        SELECT 1
+        FROM Customer c2
+        WHERE c2.customer_id = c.customer_id
+          AND c2.product_key = p.product_key
+    )
+);
