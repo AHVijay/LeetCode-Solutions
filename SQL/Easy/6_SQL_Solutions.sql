@@ -80,7 +80,7 @@ SELECT
     w1.id
 FROM Weather w1
 JOIN weather w2 
-    ON w1.recordDate = w2.recordDate + INTERVAL 1 day
+    ON w1.recordDate = DATEADD(day, 1, w2.recordDate)
         where w1.temperature > w2.temperature;
 
 
@@ -555,3 +555,40 @@ FROM
     Courses
 GROUP BY class
 HAVING COUNT(*) >= 5;
+
+
+/*
+_______________________________________________________________________________________________________________
+21) Problem: Find Followers Count
+LeetCode: https://leetcode.com/problems/user-activity-for-the-past-30-days-i/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+Followers
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| user_id     | int  |
+| follower_id | int  |
++-------------+------+
+(user_id, follower_id) is the primary key (combination of columns with unique values) for this table.
+This table contains the IDs of a user and a follower in a social media app where the follower follows the user.
+
+Description:
+
+Write a solution that will, for each user, return the number of followers.
+
+Return the result table ordered by user_id in ascending order.
+
+Approach 1:
+1) Use GROUP BY to group the result table by user_id.
+2) Use COUNT() to find the number of followers for each user.
+3) Use ORDER BY to sort the result table by user_id in ascending order.
+*/
+
+SELECT
+    user_id, COUNT(follower_id) AS followers_count
+FROM
+    Followers
+GROUP BY user_id
+ORDER BY user_id;
