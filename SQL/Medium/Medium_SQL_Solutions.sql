@@ -473,3 +473,34 @@ FROM (
 ) grouped
 GROUP BY num, grp
 HAVING COUNT(*) >= 3;
+
+
+/*
+_____________________________________________________________________________________________________________
+9) Problem: Product Price at a Given Date
+LeetCode: https://leetcode.com/problems/product-price-at-a-given-date/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Products
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| product_id    | int     |
+| new_price     | int     |
+| change_date   | date    |
++---------------+---------+
+(product_id, change_date) is the primary key (combination of columns with unique values) of this table.
+Each row of this table indicates that the price of some product was changed to a new price at some date.
+
+Description:
+
+Initially, all products have price 10.
+Write a solution to find the prices of all products on the date 2019-08-16.
+
+Return the result table in any order.
+
+Approach 1:
+1) Use 
+*/
+
