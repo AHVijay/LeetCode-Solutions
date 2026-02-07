@@ -501,6 +501,78 @@ Write a solution to find the prices of all products on the date 2019-08-16.
 Return the result table in any order.
 
 Approach 1:
-1) Use 
+1) Use UNION to combine the two queries.
 */
 
+-- Part 1: Products that had price changes on or before 2019-08-16
+SELECT 
+    product_id,
+    new_price AS price
+FROM (
+    SELECT 
+        product_id,
+        new_price,
+        ROW_NUMBER() OVER(PARTITION BY product_id ORDER BY change_date DESC) AS rn
+    FROM Products
+    WHERE change_date <= '2019-08-16'
+) latest
+WHERE rn = 1
+
+UNION
+
+-- Part 2: Products that never had a price change before 2019-08-16
+SELECT DISTINCT 
+    product_id,
+    10 AS price
+FROM Products
+WHERE product_id NOT IN (
+    SELECT product_id
+    FROM Products
+    WHERE change_date <= '2019-08-16'
+);
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use COALESCE to replace NULL with 10.
+*/
+
+SELECT 
+    DISTINCT product_id,
+    IFNULL(
+        (SELECT TOP 1 new_price 
+         FROM Products p2 
+         WHERE p2.product_id = p1.product_id 
+           AND p2.change_date <= '2019-08-16'
+         ORDER BY p2.change_date DESC),
+        10
+    ) AS price
+FROM Products p1;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 3:
+1) Use LEFT JOIN to find the latest price change for each product before the given date.
+*/
+
+SELECT 
+    all_products.product_id,
+    IFNULL(latest_prices.new_price, 10) AS price
+FROM (
+    SELECT DISTINCT product_id FROM Products
+) all_products
+LEFT JOIN (
+    SELECT 
+        product_id,
+        new_price
+    FROM (
+        SELECT 
+            product_id,
+            new_price,
+            ROW_NUMBER() OVER(PARTITION BY product_id ORDER BY change_date DESC) AS rn
+        FROM Products
+        WHERE change_date <= '2019-08-16'
+    ) ranked
+    WHERE rn = 1
+) latest_prices
+ON all_products.product_id = latest_prices.product_id;
