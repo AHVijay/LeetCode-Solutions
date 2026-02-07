@@ -405,3 +405,71 @@ WHERE NOT EXISTS (
           AND c2.product_key = p.product_key
     )
 );
+
+
+/*
+_____________________________________________________________________________________________________________
+8) Problem: Consecutive Numbers
+LeetCode: https://leetcode.com/problems/consecutive-numbers/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Logs
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| num         | varchar |
++-------------+---------+
+In SQL, id is the primary key for this table.
+id is an autoincrement column starting from 1.
+
+Description:
+
+Find all numbers that appear at least three times consecutively.
+Return the result table in any order.
+
+Approach 1:
+1) Use JOIN to join the table with itself twice to find the consecutive numbers.
+*/
+
+SELECT DISTINCT l1.num AS ConsecutiveNums
+FROM Logs l1
+JOIN Logs l2 ON l1.id = l2.id - 1
+JOIN Logs l3 ON l1.id = l3.id - 2
+WHERE l1.num = l2.num
+  AND l1.num = l3.num;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use LEAD() window function to find the next two numbers.
+*/
+
+SELECT DISTINCT num AS ConsecutiveNums
+FROM (
+    SELECT 
+        num,
+        LEAD(num, 1) OVER(ORDER BY id) AS next_num,
+        LEAD(num, 2) OVER(ORDER BY id) AS next_next_num
+    FROM Logs
+) consecutive
+WHERE num = next_num
+  AND num = next_next_num;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 3:
+1) Use ROW_NUMBER() to find the group of consecutive numbers.
+*/
+
+SELECT DISTINCT num AS ConsecutiveNums
+FROM (
+    SELECT 
+        num,
+        id - ROW_NUMBER() OVER(PARTITION BY num ORDER BY id) AS grp
+    FROM Logs
+) grouped
+GROUP BY num, grp
+HAVING COUNT(*) >= 3;

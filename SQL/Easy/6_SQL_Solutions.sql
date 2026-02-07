@@ -775,3 +775,44 @@ FROM (
     FROM Employee
 ) e
 WHERE primary_flag = 'Y' OR dept_count = 1;
+
+/*
+_______________________________________________________________________________________________________________
+25) Problem: Triangle Judgement
+LeetCode: http://leetcode.com/problems/triangle-judgement/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Triangle
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| x           | int  |
+| y           | int  |
+| z           | int  |
++-------------+------+
+In SQL, (x, y, z) is the primary key column for this table.
+Each row of this table contains the lengths of three line segments.
+
+Description:
+
+Report for every three line segments whether they can form a triangle.
+
+Return the result table in any order.
+
+Approach 1: MYSQL APPROACH
+1) Use CASE statement to find whether the three line segments can form a triangle.
+*/
+
+SELECT 
+    x, y, z,
+    CASE WHEN
+            x > 0 AND y > 0 AND z > 0
+            AND x + y > z
+            AND x + z > y
+            AND y + z > x
+        THEN 'Yes'
+        ELSE 'No'
+    END AS triangle
+FROM Triangle;
+
