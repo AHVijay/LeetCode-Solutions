@@ -694,8 +694,84 @@ INNER JOIN Employees e
     ON m.employee_id = e.reports_to
 GROUP BY m.employee_id, m.name
 ORDER BY m.employee_id;
+
+
 /*
 _______________________________________________________________________________________________________________
-Approach 2: SQL SERVER APPROACH
-1) Use 
+24) Problem: Primary Department for Each Employee
+LeetCode: https://leetcode.com/problems/primary-department-for-each-employee/?envType=study-plan-v2&envId=top-sql-50
 
+Tables:
+
+Employee
++---------------+---------+
+| Column Name   |  Type   |
++---------------+---------+
+| employee_id   | int     |
+| department_id | int     |
+| primary_flag  | varchar |
++---------------+---------+
+(employee_id, department_id) is the primary key (combination of columns with unique values) for this table.
+employee_id is the id of the employee.
+department_id is the id of the department to which the employee belongs.
+primary_flag is an ENUM (category) of type ('Y', 'N'). If the flag is 'Y', the department is the primary department for the employee. 
+If the flag is 'N', the department is not the primary.
+
+Description:
+
+Employees can belong to multiple departments. When the employee joins other departments, 
+they need to decide which department is their primary department. Note that when an employee belongs to only one department, 
+their primary column is 'N'.
+Write a solution to report all the employees with their primary department. For employees who belong to one department, 
+report their only department.
+
+Return the result table in any order.
+
+Approach 1: MYSQL APPROACH
+1) Use UNION to combine the two queries.
+*/
+
+SELECT 
+    employee_id, department_id
+FROM Employee
+WHERE primary_flag = 'Y'
+UNION
+SELECT 
+    employee_id, department_id
+FROM Employee
+GROUP BY employee_id
+HAVING COUNT(department_id) = 1;
+
+/*
+_______________________________________________________________________________________________________________
+Approach 2: 
+1) Use OR to combine the two queries.
+*/
+
+SELECT employee_id, department_id
+FROM Employee
+WHERE primary_flag = 'Y'
+   OR employee_id IN (
+       SELECT employee_id
+       FROM Employee
+       GROUP BY employee_id
+       HAVING COUNT(*) = 1
+   );
+
+/*
+_______________________________________________________________________________________________________________
+Approach 3: 
+1) Use WINDOW FUNCTION to find the number of departments for each employee.
+2) Use OR to combine the two queries.
+*/
+
+SELECT employee_id, department_id
+FROM (
+    SELECT 
+        employee_id,
+        department_id,
+        primary_flag,
+        COUNT(*) OVER(PARTITION BY employee_id) AS dept_count
+    FROM Employee
+) e
+WHERE primary_flag = 'Y' OR dept_count = 1;
