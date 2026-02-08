@@ -610,6 +610,54 @@ The test cases are generated such that the first person does not exceed the weig
 Note that only one person can board the bus at any given turn.
 
 Approach 1:
-1) Use UNION to combine the two queries.
+1) Use SUM() to find the cumulative weight of all people in the queue.
+2) Use WHERE clause to filter out the people who exceed the weight limit.
+3) Use ORDER BY clause to sort the people by cumulative weight in descending order.
+4) Use TOP 1 to return the last person who can fit in the bus.
 */
 
+SELECT TOP 1 person_name
+FROM (
+    SELECT
+        person_name,
+        SUM(weight) OVER(ORDER BY turn) AS cumulative_weight
+    FROM Queue
+) weighted
+WHERE cumulative_weight <= 1000
+ORDER BY cumulative_weight DESC;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use JOIN to join the table with itself to find the cumulative weight of all people in the queue.
+2) Use GROUP BY to group the result table by turn and person_name.
+3) Use HAVING clause to filter out the people who exceed the weight limit.
+4) Use ORDER BY clause to sort the people by turn in descending order.
+5) Use TOP 1 to return the last person who can fit in the bus.
+*/
+
+SELECT TOP 1q1.person_name
+FROM Queue q1
+JOIN Queue q2 ON q1.turn >= q2.turn
+GROUP BY q1.turn, q1.person_name
+HAVING SUM(q2.weight) <= 1000
+ORDER BY q1.turn DESC;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 3:
+1) Use CTE to find the cumulative weight of all people in the queue.
+2) Use WHERE clause to filter out the people who exceed the weight limit.
+3) Use ORDER BY clause to sort the people by turn in descending order.
+4) Use TOP 1 to return the last person who can fit in the bus.
+*/
+
+SELECT TOP 1 person_name
+FROM (
+    SELECT
+        person_name,
+        SUM(weight) OVER (ORDER BY turn) AS cumulative_weight
+    FROM Queue
+) weighted
+WHERE cumulative_weight <= 1000
+ORDER BY cumulative_weight DESC;
