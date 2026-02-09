@@ -661,3 +661,83 @@ FROM (
 ) weighted
 WHERE cumulative_weight <= 1000
 ORDER BY cumulative_weight DESC;
+
+/*
+_____________________________________________________________________________________________________________
+11) Problem: Count Salary Categories
+LeetCode: https://leetcode.com/problems/count-salary-categories/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Accounts
+
++-------------+------+
+| Column Name | Type |
++-------------+------+
+| account_id  | int  |
+| income      | int  |
++-------------+------+
+account_id is the primary key (column with unique values) for this table.
+Each row contains information about the monthly income for one bank account.
+
+Description:
+
+Write a solution to calculate the number of bank accounts for each salary category. The salary categories are:
+
+"Low Salary": All the salaries strictly less than $20000.
+"Average Salary": All the salaries in the inclusive range [$20000, $50000].
+"High Salary": All the salaries strictly greater than $50000.
+The result table must contain all three categories. If there are no accounts in a category, return 0.
+
+Return the result table in any order.
+
+Approach 1:
+1) Use UNION to combine the three queries.
+*/
+
+SELECT 'Low Salary' AS category, COUNT(account_id) AS accounts_count
+FROM Accounts
+WHERE income < 20000
+
+UNION 
+
+SELECT 'Average Salary' AS category, COUNT(account_id) AS accounts_count
+FROM Accounts
+WHERE income BETWEEN 20000 AND 50000
+
+UNION 
+
+SELECT 'High Salary' AS category, COUNT(account_id) AS accounts_count
+FROM Accounts
+WHERE income > 50000;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use CASE statement to categorize the salaries.
+2) Use LEFT JOIN to join the result table with the categories table.
+*/
+
+WITH categories AS (
+    SELECT 'Low Salary' AS category
+    UNION ALL
+    SELECT 'Average Salary'
+    UNION ALL
+    SELECT 'High Salary'
+)
+SELECT 
+    c.category,
+    COALESCE(t.accounts_count, 0) AS accounts_count
+FROM categories c
+LEFT JOIN (
+    SELECT 
+        CASE
+            WHEN income < 20000 THEN 'Low Salary'
+            WHEN income BETWEEN 20000 AND 50000 THEN 'Average Salary'
+            ELSE 'High Salary'
+        END AS category,
+        COUNT(*) AS accounts_count
+    FROM Accounts
+    GROUP BY category
+) t
+ON c.category = t.category;
