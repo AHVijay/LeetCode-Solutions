@@ -888,7 +888,9 @@ average_amount should be rounded to two decimal places.
 Return the result table ordered by visited_on in ascending order.
 
 Approach 1:
-1) Use 
+1) Use SUM() to find the total amount paid by customers in a seven days window.
+2) Use AVG() to find the average amount paid by customers in a seven days window.
+3) Use ROUND() to round the average amount to two decimal places.
 */
 
 SELECT
@@ -912,3 +914,70 @@ WHERE a.visited_on >= (
 )
 GROUP BY a.visited_on
 ORDER BY a.visited_on;
+
+
+/*
+_____________________________________________________________________________________________________________
+14) Problem: Friend Requests II: Who Has the Most Friends
+LeetCode: https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+RequestAccepted
+
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| requester_id   | int     |
+| accepter_id    | int     |
+| accept_date    | date    |
++----------------+---------+
+(requester_id, accepter_id) is the primary key (combination of columns with unique values) for this table.
+This table contains the ID of the user who sent the request, the ID of the user who received the request, 
+and the date when the request was accepted.
+
+Description:
+
+Write a solution to find the people who have the most friends and the most friends number.
+
+The test cases are generated so that only one person has the most friends.
+
+Approach 1:
+1) Use UNION to combine the two queries.
+2) Use GROUP BY to group the result table by id.
+3) Use ORDER BY to sort the result table by the number of friends.
+4) Use TOP 1 to return the person who has the most friends.
+*/
+
+SELECT TOP 1
+  id,
+  COUNT(*) AS num
+FROM (
+  -- All friend connections (both directions)
+  SELECT requester_id AS id FROM RequestAccepted
+  UNION ALL
+  SELECT accepter_id AS id FROM RequestAccepted
+) AS friends
+GROUP BY id
+ORDER BY num DESC;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use CTE to find all friend connections (both directions).
+2) Use GROUP BY to group the result table by id.
+3) Use ORDER BY to sort the result table by the number of friends.
+4) Use TOP 1 to return the person who has the most friends.
+*/
+
+WITH all_friends AS (
+  SELECT requester_id AS id FROM RequestAccepted
+  UNION ALL
+  SELECT accepter_id AS id FROM RequestAccepted
+)
+SELECT TOP 1
+  id,
+  COUNT(*) AS num
+FROM all_friends
+GROUP BY id
+ORDER BY num DESC;
