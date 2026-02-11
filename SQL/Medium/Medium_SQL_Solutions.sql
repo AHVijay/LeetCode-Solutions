@@ -856,3 +856,59 @@ JOIN Movies m ON mr.movie_id = m.movie_id
 WHERE mr.created_at >= '2020-02-01' AND mr.created_at < '2020-03-01'
 GROUP BY m.movie_id, m.title
 ORDER BY AVG(mr.rating) DESC, m.title ASC;
+
+/*
+_____________________________________________________________________________________________________________
+13) Problem: Restaurant Growth
+LeetCode: https://leetcode.com/problems/restaurant-growth/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Customer
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| customer_id   | int     |
+| name          | varchar |
+| visited_on    | date    |
+| amount        | int     |
++---------------+---------+
+In SQL,(customer_id, visited_on) is the primary key for this table.
+This table contains data about customer transactions in a restaurant.
+visited_on is the date on which the customer with ID (customer_id) has visited the restaurant.
+amount is the total paid by a customer.
+
+Description:
+
+You are the restaurant owner and you want to analyze a possible expansion (there will be at least one customer every day).
+Compute the moving average of how much the customer paid in a seven days window (i.e., current day + 6 days before). 
+average_amount should be rounded to two decimal places.
+
+Return the result table ordered by visited_on in ascending order.
+
+Approach 1:
+1) Use 
+*/
+
+SELECT 
+    a.visited_on,
+    SUM(b.daily_amount) AS amount,
+    ROUND(AVG(b.daily_amount), 2) AS average_amount
+FROM (
+    SELECT visited_on, SUM(amount) AS daily_amount
+    FROM Customer
+    GROUP BY visited_on
+) a
+JOIN (
+    SELECT visited_on, SUM(amount) AS daily_amount
+    FROM Customer
+    GROUP BY visited_on
+) b ON b.visited_on BETWEEN DATE_SUB(a.visited_on, INTERVAL 6 DAY) 
+                         AND a.visited_on
+WHERE a.visited_on >= (
+    SELECT DATE_ADD(MIN(visited_on), INTERVAL 6 DAY) 
+    FROM Customer
+)
+GROUP BY a.visited_on
+ORDER BY a.visited_on;
