@@ -891,7 +891,7 @@ Approach 1:
 1) Use 
 */
 
-SELECT 
+SELECT
     a.visited_on,
     SUM(b.daily_amount) AS amount,
     ROUND(AVG(b.daily_amount), 2) AS average_amount
@@ -904,10 +904,10 @@ JOIN (
     SELECT visited_on, SUM(amount) AS daily_amount
     FROM Customer
     GROUP BY visited_on
-) b ON b.visited_on BETWEEN DATE_SUB(a.visited_on, INTERVAL 6 DAY) 
+) b ON b.visited_on BETWEEN DATEADD(DAY, -6, a.visited_on)
                          AND a.visited_on
 WHERE a.visited_on >= (
-    SELECT DATE_ADD(MIN(visited_on), INTERVAL 6 DAY) 
+    SELECT DATEADD(DAY, 6, MIN(visited_on))
     FROM Customer
 )
 GROUP BY a.visited_on
