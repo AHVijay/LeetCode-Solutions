@@ -970,14 +970,4 @@ Approach 2:
 4) Use TOP 1 to return the person who has the most friends.
 */
 
-WITH all_friends AS (
-  SELECT requester_id AS id FROM RequestAccepted
-  UNION ALL
-  SELECT accepter_id AS id FROM RequestAccepted
-)
-SELECT TOP 1
-  id,
-  COUNT(*) AS num
-FROM all_friends
-GROUP BY id
-ORDER BY num DESC;
+
