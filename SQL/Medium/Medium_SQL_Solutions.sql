@@ -943,7 +943,7 @@ Write a solution to find the people who have the most friends and the most frien
 The test cases are generated so that only one person has the most friends.
 
 Approach 1:
-1) Use UNION to combine the two queries.
+1) Use UNION ALL to combine the two queries.
 2) Use GROUP BY to group the result table by id.
 3) Use ORDER BY to sort the result table by the number of friends.
 4) Use TOP 1 to return the person who has the most friends.
