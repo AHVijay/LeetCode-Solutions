@@ -909,3 +909,41 @@ SELECT
     CONCAT(UPPER(LEFT(name, 1)), LOWER(SUBSTRING(name, 2))) AS name
 FROM Users
 ORDER BY user_id;
+
+/*
+_______________________________________________________________________________________________________________
+28) Problem: Patients With a Condition
+LeetCode: https://leetcode.com/problems/patients-with-a-condition/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Patients
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| patient_id   | int     |
+| patient_name | varchar |
+| conditions   | varchar |
++--------------+---------+
+patient_id is the primary key (column with unique values) for this table.
+'conditions' contains 0 or more code separated by spaces. 
+This table contains information of the patients in the hospital.
+
+Description:
+
+Write a solution to find the patient_id, patient_name, and conditions of the patients who have Type I Diabetes. 
+Type I Diabetes always starts with DIAB1 prefix.
+
+Return the result table in any order.
+
+Approach 1: MYSQL APPROACH
+1) Use OR to combine the two conditions.
+*/
+
+SELECT patient_id,
+    patient_name,
+    conditions
+FROM Patients
+WHERE conditions LIKE 'DIAB1%'       
+   OR conditions LIKE '% DIAB1%';
