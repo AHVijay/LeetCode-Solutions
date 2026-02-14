@@ -819,7 +819,7 @@ FROM Triangle;
 
 /*
 _______________________________________________________________________________________________________________
-2) Problem: Employees Whose Manager Left the Company
+26) Problem: Employees Whose Manager Left the Company
 LeetCode: https://leetcode.com/problems/employees-whose-manager-left-the-company/description/?envType=study-plan-v2&envId=top-sql-50
 
 Tables:
@@ -875,3 +875,37 @@ WHERE e1.salary < 30000
   AND e1.manager_id IS NOT NULL
   AND e2.employee_id IS NULL
 ORDER BY e1.employee_id;
+
+/*
+_______________________________________________________________________________________________________________
+27) Problem: Fix Names in a Table
+LeetCode: https://leetcode.com/problems/fix-names-in-a-table/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Users
+
++----------------+---------+
+| Column Name    | Type    |
++----------------+---------+
+| user_id        | int     |
+| name           | varchar |
++----------------+---------+
+user_id is the primary key (column with unique values) for this table.
+This table contains the ID and the name of the user. The name consists of only lowercase and uppercase characters.
+
+Description:
+
+Write a solution to fix the names so that only the first character is uppercase and the rest are lowercase.
+
+Return the result table ordered by user_id.
+
+Approach 1: MYSQL APPROACH
+1) Use CONCAT to concatenate the first character of the name in uppercase and the rest of the name in lowercase.
+*/
+
+SELECT 
+    user_id,
+    CONCAT(UPPER(LEFT(name, 1)), LOWER(SUBSTRING(name, 2))) AS name
+FROM Users
+ORDER BY user_id;
