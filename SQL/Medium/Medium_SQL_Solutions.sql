@@ -1065,6 +1065,52 @@ Write a solution to find the second highest distinct salary from the Employee ta
 If there is no second highest salary, return null (return None in Pandas).
 
 Approach 1:
-1) Use 
+1) Use DISTINCT to find all distinct salaries.
+2) Use ORDER BY to sort the salaries in descending order.
+3) Use OFFSET and FETCH to skip the first salary and fetch the second salary.
+4) Use SELECT to return the second highest salary.
 */
 
+WITH s AS (
+SELECT DISTINCT salary
+FROM Employee
+)
+SELECT (
+    SELECT s2.salary
+    FROM (
+            SELECT salary
+            FROM s
+            ORDER BY salary DESC
+            OFFSET 1 ROWS FETCH NEXT 1 ROWS ONLY
+        ) AS s2
+    ) AS SecondHighestSalary;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use MAX() to find the maximum salary.
+2) Use WHERE clause to filter out the maximum salary.
+3) Use MAX() to find the second highest salary.
+4) Use SELECT to return the second highest salary.
+*/
+
+SELECT MAX(salary) AS SecondHighestSalary
+FROM Employee
+WHERE salary < (SELECT MAX(salary) FROM Employee);
+
+/*
+_____________________________________________________________________________________________________________
+Approach 3:
+1) Use DENSE_RANK() to assign a rank to each salary.
+2) Use WHERE clause to filter out the rows where rank is 2.
+3) Use SELECT to return the second highest salary.
+*/
+
+SELECT (
+    SELECT DISTINCT salary
+    FROM (
+        SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+        FROM Employee
+    ) ranked
+    WHERE rnk = 2
+) AS SecondHighestSalary;
