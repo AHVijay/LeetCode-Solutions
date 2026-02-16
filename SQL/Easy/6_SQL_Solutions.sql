@@ -1145,7 +1145,21 @@ The prefix name must start with a letter.
 The domain is '@leetcode.com'.
 Return the result table in any order.
 
-Approach 1: MYSQL APPROACH
-1) Use 
+Approach 1: SQL SERVER APPROACH
+1) Use LIKE with pattern matching and additional conditions
 */
 
+SELECT user_id, name, mail
+FROM Users
+WHERE mail LIKE '[a-zA-Z]%@leetcode.com'
+  AND mail NOT LIKE '%[^a-zA-Z0-9_.-]%@leetcode.com'
+  AND LEFT(mail, CHARINDEX('@', mail) - 1) NOT LIKE '[^a-zA-Z]%';
+
+/*
+Approach 2: MYSQL APPROACH (commented out - uncomment if using MySQL)
+1) Use REGEXP for pattern matching
+
+-- SELECT user_id, name, mail
+-- FROM Users
+-- WHERE mail REGEXP '^[a-zA-Z][a-zA-Z0-9_.-]*@leetcode\\.com$';
+*/
