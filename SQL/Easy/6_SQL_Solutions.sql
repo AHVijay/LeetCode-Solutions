@@ -1086,6 +1086,31 @@ Write a solution to get the names of products that have at least 100 units order
 Return the result table in any order.
 
 Approach 1: MYSQL APPROACH
-1) Use 
+1) Use JOIN to join the two tables and use BETWEEN to find the products ordered in February 2020.
+2) Use GROUP BY to group the result table by product_name.
+3) Use HAVING to filter the products ordered in February 2020.
 */
 
+SELECT
+    p.product_name,
+    SUM(o.unit) AS unit
+FROM Products p
+JOIN Orders o 
+    ON p.product_id = o.product_id
+WHERE o.order_date BETWEEN '2020-02-01' AND '2020-02-29'
+GROUP BY p.product_name
+HAVING SUM(o.unit) >= 100;
+
+/*
+_______________________________________________________________________________________________________________
+Approach 2: 
+1) Use JOIN to join the two tables and use YEAR() and MONTH() to find the products ordered in February 2020.
+*/
+
+SELECT p.product_name, SUM(o.unit) AS unit
+FROM Products p
+JOIN Orders o
+    ON p.product_id = o.product_id
+WHERE YEAR(o.order_date) = 2020 AND MONTH(o.order_date) = 2
+GROUP BY p.product_id, p.product_name
+HAVING SUM(o.unit) >= 100;
