@@ -1114,3 +1114,38 @@ JOIN Orders o
 WHERE YEAR(o.order_date) = 2020 AND MONTH(o.order_date) = 2
 GROUP BY p.product_id, p.product_name
 HAVING SUM(o.unit) >= 100;
+
+
+/*
+_______________________________________________________________________________________________________________
+32) Problem: Find Users With Valid E-Mails
+LeetCode: https://leetcode.com/problems/find-users-with-valid-e-mails/description/?envType=study-plan-v2&envId=top-sql-50
+
+Tables:
+
+Users
+
++---------------+---------+
+| Column Name   | Type    |
++---------------+---------+
+| user_id       | int     |
+| name          | varchar |
+| mail          | varchar |
++---------------+---------+
+user_id is the primary key (column with unique values) for this table.
+This table contains information of the users signed up in a website. Some e-mails are invalid.
+
+Description:
+
+Write a solution to find the users who have valid emails.
+A valid e-mail has a prefix name and a domain where:
+
+The prefix name is a string that may contain letters (upper or lower case), digits, underscore '_', period '.', and/or dash '-'. 
+The prefix name must start with a letter.
+The domain is '@leetcode.com'.
+Return the result table in any order.
+
+Approach 1: MYSQL APPROACH
+1) Use 
+*/
+
