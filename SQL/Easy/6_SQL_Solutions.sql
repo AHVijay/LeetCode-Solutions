@@ -1253,3 +1253,53 @@ FROM Employee e1
 JOIN Employee e2 ON e1.managerId = e2.id
 WHERE e1.salary > e2.salary;
 
+
+/*
+_______________________________________________________________________________________________________________
+35) Problem: Customer Placing the Largest Number of Orders
+LeetCode: https://leetcode.com/problems/customer-placing-the-largest-number-of-orders/description/?envType=problem-list-v2&envId=db-db2-filtering-aggregation
+
+Tables:
+
+Orders
+
++-----------------+----------+
+| Column Name     | Type     |
++-----------------+----------+
+| order_number    | int      |
+| customer_number | int      |
++-----------------+----------+
+order_number is the primary key (column with unique values) for this table.
+This table contains information about the order ID and the customer ID.
+
+Description:
+
+Write a solution to find the customer_number for the customer who has placed the largest number of orders.
+
+The test cases are generated so that exactly one customer will have placed more orders than any other customer.
+
+Approach 1: SQL SERVER APPROACH
+1) Use GROUP BY to group the result table by customer_number.
+2) Use ORDER BY to sort the result table by the number of orders in descending order.
+3) Use TOP 1 to find the customer_number for the customer who has placed the largest number of orders.
+*/
+
+SELECT
+   TOP 1 customer_number
+FROM Orders
+GROUP BY customer_number
+ORDER BY COUNT(*) DESC;
+
+/*
+_______________________________________________________________________________________________________________0
+Approach 2: 
+1) Use SUBQUERY to find the customer_number for the customer who has placed the largest number of orders.
+*/
+
+SELECT TOP 1customer_number
+FROM (
+        SELECT customer_number, COUNT(*) AS order_count
+        FROM Orders
+        GROUP BY customer_number
+    ) AS t
+ORDER BY order_count DESC;
