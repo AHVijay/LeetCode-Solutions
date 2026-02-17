@@ -1216,3 +1216,40 @@ SELECT
 FROM Person p
 LEFT JOIN Address a ON p.personId = a.personId;
 
+
+/*
+_______________________________________________________________________________________________________________
+34) Problem: Employees Earning More Than Their Managers
+LeetCode: https://leetcode.com/problems/employees-earning-more-than-their-managers/description/?envType=problem-list-v2&envId=db-db1-sql-i
+
+Tables:
+
+Employee
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| salary      | int     |
+| managerId   | int     |
++-------------+---------+
+id is the primary key (column with unique values) for this table.
+Each row of this table indicates the ID of an employee, their name, salary, and the ID of their manager.
+
+Description:
+
+Write a solution to find the employees who earn more than their managers.
+
+Return the result table in any order.
+
+Approach 1: SQL SERVER APPROACH
+1) Use JOIN to join the two tables and find the employees who earn more than their managers.
+*/
+
+SELECT 
+    e1.name AS Employee
+FROM Employee e1
+JOIN Employee e2 ON e1.managerId = e2.id
+WHERE e1.salary > e2.salary;
+
