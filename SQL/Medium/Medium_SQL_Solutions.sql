@@ -1147,6 +1147,34 @@ Write a solution to report the type of each node in the tree.
 Return the result table in any order.
 
 Approach 1:
-1) Use 
+1) Use CASE statement to categorize the nodes. 
+2) Use IN to find the nodes that have children.
 */
 
+SELECT
+    id,
+    CASE
+        WHEN p_id IS NULL THEN 'Root'
+        WHEN id IN (SELECT p_id FROM Tree) THEN 'Inner'
+        ELSE 'Leaf'
+    END AS type
+FROM Tree;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2:
+1) Use CASE statement to categorize the nodes. 
+2) Use EXISTS to find the nodes that have children.
+*/
+
+SELECT 
+    id,
+    case
+        when p_id is null then 'Root'
+        when not exists (
+            select 1 from Tree t2
+            where t2.p_id = t1.id
+        ) then 'Leaf'
+        else 'Inner'
+    end as type
+from Tree t1
