@@ -1252,7 +1252,57 @@ Write a solution to find employees who have the highest salary in each of the de
 
 Return the result table in any order.
 
-Approach 1:
-1) Use 
+Approach 1: SQL Server
+1) Use JOIN to join the Employee and Department tables.
+2) Use GROUP BY to group the result table by departmentId.
+3) Use MAX() to find the highest salary in each department.
+4) Use WHERE clause to filter out the rows where salary is not equal to the highest salary in each department.
 */
 
+SELECT d.name AS Department, e.name AS Employee, e.salary AS Salary
+FROM Employee e
+JOIN Department d ON e.departmentId = d.id
+JOIN (
+    SELECT departmentId, MAX(salary) AS max_salary
+    FROM Employee
+    GROUP BY departmentId
+) AS dept_max ON e.departmentId = dept_max.departmentId
+             AND e.salary = dept_max.max_salary;
+
+/*
+_____________________________________________________________________________________________________________
+Approach 2: MySQL, PostgreSQL
+1) Use JOIN to join the Employee and Department tables.
+2) Use GROUP BY to group the result table by departmentId.
+3) Use MAX() to find the highest salary in each department.
+4) Use HAVING clause to filter out the rows where salary is not equal to the highest salary in each department.
+*/
+
+/*SELECT d.name AS Department, e.name AS Employee, e.salary AS Salary
+FROM Employee e
+JOIN Department d ON e.departmentId = d.id
+WHERE (e.departmentId, e.salary) IN (
+    SELECT departmentId, MAX(salary) AS max_salary
+    FROM Employee
+    GROUP BY departmentId
+);
+*/
+
+/*
+_____________________________________________________________________________________________________________
+Approach 3: MySQL, PostgreSQL
+1) Use RANK() to assign a rank to each salary for each department.
+2) Use WHERE clause to filter out the rows where rank is not 1.
+*/
+
+SELECT Department, Employee, Salary
+FROM (
+    SELECT 
+        d.name AS Department,
+        e.name AS Employee,
+        e.salary AS Salary,
+        RANK() OVER (PARTITION BY e.departmentId ORDER BY e.salary DESC) AS rnk
+    FROM Employee e
+    JOIN Department d ON e.departmentId = d.id
+) ranked
+WHERE rnk = 1;
