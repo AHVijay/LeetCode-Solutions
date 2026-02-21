@@ -344,3 +344,28 @@ def findHeavyAnimals(animals: pd.DataFrame) -> pd.DataFrame:
 # or
 
     return animals.query('weight > 100').sort_values(by='weight', ascending=False)[['name']]
+
+
+"""
+16. Problem: Check the status
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/check-the-status/1?page=1&category=python&sortBy=submissions
+
+Description:
+Given two integer variables a and b, and a boolean variable flag. The task is to check the status and return accordingly.
+Return True for the following cases:
+
+Either a or b (not both) is non-negative and the flag is false.
+Both a and b are negative and the flag is true.
+
+Approach:
+Use 
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+class Solution:
+    def checkStatus(self, a, b, flag):
+        # code here
+        if flag:
+            return a<0 and b<0
+        else: 
+            return (a>=0) ^ (b>=0)
