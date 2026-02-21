@@ -358,7 +358,8 @@ Either a or b (not both) is non-negative and the flag is false.
 Both a and b are negative and the flag is true.
 
 Approach:
-Use 
+1) Use if-else to check the status.
+
 Time Complexity: O(1)
 Space Complexity: O(1)
 """
@@ -369,3 +370,27 @@ class Solution:
             return a<0 and b<0
         else: 
             return (a>=0) ^ (b>=0)
+        
+
+"""
+17. Problem: Mark Even and Odd
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/mark-even-and-odd/1?page=1&category=python&sortBy=submissions
+
+Description:
+Given a positive integer x. Your task is to check, if it is even or 
+odd (Any number that gives zero as remainder when divided by 2 is an even number).
+Note: Return "Even" if the number is even; otherwise, return "Odd".
+
+Approach:
+1) Use if-else to check the status.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+def checkOddEven(self, x):
+    # Code here
+    if x % 2 == 0:
+        return "Even"
+    else:
+        return "Odd"
