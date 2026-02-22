@@ -426,3 +426,87 @@ def fizzBuzz(number):
         print("Buzz")
     else:
         print(number)
+
+
+"""
+19. Problem: If conditional statement
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/if-loop-python/1?page=1&category=python&sortBy=submissions
+
+Description:
+There are two friends, John and Smith, and the parameters j_angry and s_angry to indicate if each is angry. You are in trouble if both of them are angry or no one of them is angry.
+
+Now, complete the function which returns true if you are in trouble, else return false
+
+Example 1:
+
+Input:
+j_angry = True, s_angry = True
+Output:
+True
+Explanation:
+Since both of them are angry, you are in trouble.
+Example 2:
+
+Input:
+j_angry = True, s_angry = False
+Output:
+False
+Explanation:
+Only one of them is angry, you are not in trouble.
+
+Approach:
+1) Use if-elif-else to check the status.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+def friends_in_trouble(j_angry, s_angry):
+    if (j_angry == True and s_angry == True) or (j_angry == False and s_angry == False):
+        return 'True'
+    else:
+        return 'False'
+    
+
+"""
+20. Problem: Zero Converter
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/zero-converter-python/1?page=1&category=python&sortBy=submissions
+
+Description:
+You are given a number n. The number n can be negative or positive. If n is negative, print numbers from n to 0 by adding 1 to n in the neg function. If positive, print numbers from n-1 to 0 by subtracting 1 from n in the pos function.
+
+Note:- You don't have to return anything, you just have to print the array.
+
+Example 1:
+Input:
+n = 4
+Output:
+3 2 1 0
+
+Example 2:
+Input:
+n = -3
+Output:
+-3 -2 -1 0
+
+Approach:
+1) Use while loop to print the numbers.
+
+Time Complexity: O(|n|)
+Space Complexity: O(1)
+"""
+
+def pos(n):
+    ## Write the code
+    i = n - 1
+    while i >= 0:
+        print(i, end =" ")
+        i -= 1
+           
+    
+def neg(n):
+    ##Write the code
+    i = n
+    while i <= 0:
+        print(i, end =" ")
+        i += 1
