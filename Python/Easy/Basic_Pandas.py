@@ -542,3 +542,37 @@ def printIncreasingPower(x):
         
         print (i**2 , end = " ")
         i += 1
+
+"""
+22. Problem: For Loop
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/for-loop-python/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+Writing for loop in Python is a tad different from C++ and Java counterparts. In this question, we'll learn to print table by using the for loop.
+You are given a number N, you need to print its multiplication table.
+
+Note: Please go through the range function to understand why it's useful in for loops.
+
+Example:
+
+Example 1:
+Input:
+N = 5
+Output:
+5 10 15 20 25 30 35 40 45 50
+
+Example 2:
+Input:
+N = 6
+Output:
+6 12 18 24 30 36 42 48 54 60
+
+Approach:
+1) Use while loop to print the numbers.
+2) Use i**2 <= x to check if the number is less than or equal to x.
+
+Time Complexity: O(√x)
+Space Complexity: O(1)
+"""
+
