@@ -572,7 +572,11 @@ Approach:
 1) Use while loop to print the numbers.
 2) Use i**2 <= x to check if the number is less than or equal to x.
 
-Time Complexity: O(√x)
+Time Complexity: O(10)
 Space Complexity: O(1)
 """
 
+def MutliplicationTable(N):
+
+    for i in range(1, 11):
+        print(N * i, end = " ")
