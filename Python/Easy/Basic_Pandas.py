@@ -569,8 +569,7 @@ Output:
 6 12 18 24 30 36 42 48 54 60
 
 Approach:
-1) Use while loop to print the numbers.
-2) Use i**2 <= x to check if the number is less than or equal to x.
+1) Use for loop to print the numbers.
 
 Time Complexity: O(10)
 Space Complexity: O(1)
@@ -580,3 +579,50 @@ def MutliplicationTable(N):
 
     for i in range(1, 11):
         print(N * i, end = " ")
+
+
+"""
+23. Problem: The FizzBuzz Program
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/the-fizzbuzz-program--125723/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+You are given a number a and you have to print your answer according to the following:
+
+If the number is divisible by 3, you print "Fizz" (without quotes)
+If the number is divisible by 5, you print "Buzz" (without quotes)
+If the number is divisible by both 3 and 5, you print "FizzBuzz" (without quotes)
+In any other case, you print the number itself
+
+Note: You should add a new-line character after print statement.
+
+Examples:
+
+Input: a = 3
+Output: Fizz
+Explanation: Here, the number is divisible by 3, so Fizz is printed.
+
+Input: a = 5
+Output: Buzz
+Explanation: Here the number is divisible by 5, so Buzz is printed.
+
+Input: a = 15
+Output: FizzBuzz
+Explanation: Here, the number 15 is divisible by both 3 and 5, so FizzBuzz is printed.
+
+Approach:
+1) Use 
+
+Time Complexity: O(10)
+Space Complexity: O(1)
+"""
+
+a = int(input())
+if a % 3 == 0 and a % 5 == 0:
+    print("FizzBuzz")
+elif a % 3 == 0:
+    print("Fizz")
+elif a % 5 == 0:
+    print("Buzz")
+else:
+    print(a)
