@@ -705,3 +705,112 @@ def titleIt(str):
 
 def casesSwap(str):
     return str.swapcase()
+
+"""
+25. Problem: Find index
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/find-index-1614919939--145853/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+Given a tuple arr with distinct elements and an integer x, find the index position of x. 
+Assume to have x in the tuple always. Print the index (0-based).
+
+Examples:
+
+Input: arr = (1, 2, 3, 4, 5), x = 3
+Output: 2
+Input: arr = (3, 2, 1, 5, 4), x = 5
+Output: 3
+
+Approach:
+1) Use for loop to find the index.
+
+Time Complexity: O(n)
+Space Complexity: O(1)
+"""
+
+arr = tuple(map(int, input().split()))
+x = int(input())
+
+
+for i in range(len(arr)):
+    if arr[i] == x:
+        print(i, end=' ')
+
+"""
+26. Problem: String Functions - II
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/string-functions-ii/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+Given a string S, the task is to determine whether the string starts and ends with the characters 'gfg' (case insensitive). 
+In order to complete this task, you need to utilize the string functions S.lower(), S.upper(), S.startswith('string2'), and S.endswith('string2'). 
+By using these functions, you can check if the given string S meets the specified conditions of starting and ending with 'gfg'.
+
+Example 1:
+
+Input:
+S: "gFgabcdEGfG"
+Output:
+Yes
+Explanation:
+The given string "gFgabcdEGfG" starts with "gfg" and also ends with "gfg" after converting it to lowercase ("gfgabcdegfg"), so the output is Yes.
+Example 2:
+
+Input:
+S: "GgfhTnagfg"
+Output:
+No
+Explanation:
+The given string "GgfhTnagfg" only ends with "gfg" after converting it to lowercase ("ggfhtnagfg"), but it does not start with "gfg", 
+so the output is No.
+
+Approach:
+1) Use if-else to check the status.
+2) Use lower() to convert the string to lowercase.
+3) Use startswith() and endswith() to check the status.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+def gfg(S):
+    b = S.lower()
+    if (b.startswith('gfg') and b.endswith('gfg')):
+        print("Yes")
+    else:
+        print("No")
+
+"""
+27. Problem: Slicing in String
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/slicing-in-string-python/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+Now, lets look into this through a question. Given a string of braces named bound_by, and a string named tag_name. The task is to print a new string such that tag_name is in the middle of bound_by.
+
+Example 1:
+
+Input: 
+bound_by = [[]], tag_name = tag
+Output:
+[[tag]]
+Example 2:
+
+Input: 
+bound_by = <>, tag_name = body
+Output:
+<body>
+
+Approach:
+1) Use slicing to print the string.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+# Function to join given bound_by and tag
+def join_middle(bound_by, tag_name):
+    mid = len(bound_by) // 2
+  # complete the statement below to return the string as required
+    return bound_by[0 : mid] + tag_name + bound_by[mid : ]
