@@ -666,3 +666,42 @@ def utility(a, b, opr):
         print(a * b,end = " ")
     else:
         print("Invalid Input", end = " ")
+
+"""
+24. Problem: String Functions 1
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/string-functions-i/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+In this question, we'll take a look at inbuilt string methods like title(), swapcase(), find(), strip().
+You'll be given a string str and x, you'll perform various operations on them.
+
+Example:
+
+Input:
+str = hello 
+x = llo
+Output:
+hello 
+2 
+Hello 
+HELLO
+
+Approach:
+1) Use string methods to perform the operations.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+def trim(str):
+    return str.strip()
+
+def exists(str, x):
+    return str.find(x) 
+
+def titleIt(str):
+    return str.title()
+
+def casesSwap(str):
+    return str.swapcase()
