@@ -611,7 +611,7 @@ Output: FizzBuzz
 Explanation: Here, the number 15 is divisible by both 3 and 5, so FizzBuzz is printed.
 
 Approach:
-1) Use 
+1) Use if-elif-else to check the status.
 
 Time Complexity: O(10)
 Space Complexity: O(1)
@@ -626,3 +626,43 @@ elif a % 5 == 0:
     print("Buzz")
 else:
     print(a)
+
+"""
+24. Problem: Calculator
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/calculator/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+Given two numbers a and b; you need to perform basic mathematical operation on them. You will be provided an integer named as operator. 
+If operator equals to 1 add a and b, then print the result as a string.
+If operator equals to 2 subtract b from a, then print the result as a string.
+If operator equals to 3 multiply a and b, then print the result as a string.
+If operator equals to any another number, print "Invalid Input"(without quotes).
+Note: Do not add a new line at the end
+
+Examples:
+
+Input: a = 1, b = 2, opr = 3
+Output: 2
+Explanation: 1 * 2 = 2
+Input: a = 2, b = 2, opr = 2
+Output: 0
+Explanation: 2 - 2 = 0
+
+Approach:
+1) Use if-elif-else to check the status.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+def utility(a, b, opr):
+    #code here
+    if opr == 1:
+        print(a + b, end = " ")
+    elif opr == 2:
+        print(a - b,end = " ")
+    elif opr == 3:
+        print(a * b,end = " ")
+    else:
+        print("Invalid Input", end = " ")
