@@ -814,3 +814,45 @@ def join_middle(bound_by, tag_name):
     mid = len(bound_by) // 2
   # complete the statement below to return the string as required
     return bound_by[0 : mid] + tag_name + bound_by[mid : ]
+
+"""
+28. Problem: Day before N days
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/days-before-n-days--150030/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+Given two integers d and n. Where d is the day, out of 7 days of the week, d varies from 0 to 6 as shown below.
+0 - Sunday
+1 - Monday
+2 - Tuesday
+3 - Wednesday
+4 - Thursday
+5 - Friday
+6 - Saturday
+
+You have to return the index for the day which is n days before the given day d.
+
+Examples:
+
+Input: d = 4, n = 3
+Output: 1
+Explanation: 3 days before the 4th(Thursday) is 1(Monday).
+Input: d = 2, n = 19
+Output: 4
+Explanation: 19 days before the 2nd(Tuesday) is 4(Thursday).
+
+Approach:
+1) Use if-else to check the status.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+class Solution:
+    def findAnswer(self, d, n): 
+       #Code here
+        if (n < d) or (n ==d):
+            return (d - n)
+        else:
+            return ((d - n) %7)
+        
