@@ -919,3 +919,54 @@ def print_dict(key, dict):
         print(-1)
     
     
+"""
+30. Problem: Dictionary in Python - II
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/dictionary-in-python-ii/1?page=2&category=python&sortBy=submissions
+
+Description:
+
+Given a list arr[], of positive integers, and an integer sum. 
+The task is to check if any pair exists in the array whose sum is equal to the given sum. 
+If such a pair exists return true, otherwise, return false.
+
+Example:
+
+Input: arr[] = [1, 2, 3, 3, 5], sum = 8 
+Output: true
+Explanation: Pair with sum 8 is present in the array which is (3, 5).
+Input: arr[] = [3, 2, 5], sum = 6 
+Output: false
+Explanation: No such pair exists in the array.
+
+Approach:
+1) Use set to store the elements.
+2) Use if-else to check the status.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+"""
+
+def pair_sum(arr, sum):
+    seen = set()
+    for num in arr:
+        if sum - num in seen:
+            return True
+        seen.add(num)
+    return False
+"""
+Approach2:
+1) Use for loop to check the status.
+2) Use if-else to check the status.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+"""
+
+def check_pair(arr, sum):
+    seen = set()
+    for num in arr:
+        if sum - num in seen:
+            return True
+        seen.add(num)
+    return False
+check_pair([1, 2, 3, 3, 5], 8)
