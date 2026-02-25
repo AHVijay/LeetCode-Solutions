@@ -970,3 +970,35 @@ def check_pair(arr, sum):
         seen.add(num)
     return False
 check_pair([1, 2, 3, 3, 5], 8)
+
+
+"""
+30. Problem: Regular Expressions 2
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/regular-expressions-2-python/1?page=2&category=python&sortBy=submissions
+
+The validation rules are as follows:
+
+The string is valid only if it starts with lowercase characters, followed by special characters !@#$% followed by numbers.
+In any other case the string is not valid.
+Example:
+
+Input: 
+str = asdsab@!@234
+Output: 
+True
+Explanation: 
+The string is valid as characters are
+followed by special case characters 
+which are then followed by numbers.
+
+Time Complexity: O(n)
+Space Complexity: O(1)
+"""
+
+def validateString(s):
+    import re
+    pattern = '^[a-z]+[!@#$%]+[0-9]+$'
+    if re.match(pattern, s):
+        return True
+    else:
+        return False
