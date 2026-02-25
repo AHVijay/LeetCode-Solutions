@@ -856,3 +856,66 @@ class Solution:
         else:
             return ((d - n) %7)
         
+
+"""
+29. Problem: Dictionary in Python - III
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/dictionary-in-python-iii/1?page=1&category=python&sortBy=submissions
+
+Description:
+
+a. i key value: Inserts key and value in the dictionary, and print 'Inserted'.
+b. d key: Delete the entry for a given key and print 'Deleted' if the key to be deleted is present, else print '-1'.
+c. key: Print marks of a given key in a statement as "Marks of student name is : marks".
+
+Example:
+
+Input:
+N = 5
+i geeks 100
+i for 200
+d geeks
+i geeks 300
+p geeks
+Output:
+Inserted
+Inserted
+Deleted
+Inserted
+Marks of geeks is 300
+Explanation:
+For first four queries, insert and del 
+operation happens, correspondingly Inserted 
+And Deleted is printed. For the last query, 
+marks of geeks is printed.
+
+Approach:
+1) Use if-elif-else to check the status.
+2) Use dict[key] to insert and delete the key.
+
+Time Complexity: O(1)
+Space Complexity: O(1)
+"""
+
+# insert into dictionary
+def insert_dict(query, dict):
+    
+    dict[query[1]] = int(query[2])
+    return "Inserted"
+    
+# deleting from dictionary
+def del_dict(query, dict):
+    
+    del dict[query[1]]
+    return "Deleted"
+    
+
+# print marks of required name
+def print_dict(key, dict):
+    
+    if key in dict:
+        s = f"Marks of {key} is {dict[key]}"
+        print(s)
+    else:
+        print(-1)
+    
+    
