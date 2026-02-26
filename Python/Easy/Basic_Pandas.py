@@ -1086,31 +1086,45 @@ def create_dict(arr):
 
 
 """
-33. Problem: Intro to Dictionary
-GeeksForGeeks: https://www.geeksforgeeks.org/problems/intro-to-dictionary-python/1?page=2&category=python&sortBy=submissions
+33. Problem: Set in Python - II
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/set-in-python-ii/1?page=2&category=python&sortBy=submissions
 
 Description:
 
-Given a list of strings containing names of students and another list containing marks of corresponding students. 
-The task is to create a dictionary to store marks of students with their names (name will be unique).
+Now, Given some elements in two sets a and b, the task is to find the elements common in two sets, elements in both the sets, 
+elements that are only in set a, not in b.
 
 Example:
 
-Input: 
-N = 5 
-names = [john, ala, ilia, sudan, mercy] 
-marks = [100, 200, 150, 80, 300]
+Input:
+a = {1, 2, 3, 4, 5}
+b = {6, 7, 8, 2, 3}
 Output:
-ala 200 
-ilia 150 
-john 100 
-mercy 300 
-sudan 80
+1 2 3 4 5 6 7 8
+2 3
+1 4 5
 
 Approach:
-1) Use dict[key] = value to create the dictionary.
-2) Use for loop to print the dictionary.
+1) Use set operations to find the common elements, difference and union of sets.
 
 Time Complexity: O(n)
 Space Complexity: O(n)
 """
+
+# Function to find common elements in sets
+# should return the intersection of sets
+def common_in_set(a, b):
+    # Your code here
+    return a.intersection(b)
+    
+# Function to find difference in sets
+# Should return the difference in sets
+def diff(a, b):
+    # Your code here
+    return a.difference(b)
+
+# Function to find union of sets
+# Should return the union of sets
+def all_in_set(a, b):
+    # Your code here
+    return a.union(b)
