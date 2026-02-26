@@ -976,6 +976,7 @@ check_pair([1, 2, 3, 3, 5], 8)
 30. Problem: Regular Expressions 2
 GeeksForGeeks: https://www.geeksforgeeks.org/problems/regular-expressions-2-python/1?page=2&category=python&sortBy=submissions
 
+Description:
 The validation rules are as follows:
 
 The string is valid only if it starts with lowercase characters, followed by special characters !@#$% followed by numbers.
@@ -991,6 +992,10 @@ The string is valid as characters are
 followed by special case characters 
 which are then followed by numbers.
 
+Approach:
+1) Use re.match() to check the status.
+2) Use if-else to check the status.
+
 Time Complexity: O(n)
 Space Complexity: O(1)
 """
@@ -1002,3 +1007,110 @@ def validateString(s):
         return True
     else:
         return False
+
+
+"""
+31. Problem: Regular Expressions 2
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/regular-expressions-2-python/1?page=2&category=python&sortBy=submissions
+
+Description:
+
+In this question, we'll learn the use of Regex in Python. 
+You will be provided a string str in which you have to find all the numbers and print them.
+
+Note: In Python, you need to import re module to use regex
+
+Example:
+
+Input: 
+str = asdasd123asmdasdk34234kfdsd34sdfk5
+Output: 
+123 34234 34 5
+
+Approach:
+1) Use re.findall() to find all the numbers.
+2) Use for loop to print the numbers.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+"""
+
+import re
+def numberMatcher(str):
+    pat=r'\d+'                 ##write the pattern here
+    match=re.findall(pat,str)  ##find all finds all the matched texts and returns a list
+    if(match): 
+        for i in match:
+            print(i, end=" ")
+    else:
+        print(-1,end="")
+
+
+"""
+32. Problem: Intro to Dictionary
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/intro-to-dictionary-python/1?page=2&category=python&sortBy=submissions
+
+Description:
+
+Given a list of strings containing names of students and another list containing marks of corresponding students. 
+The task is to create a dictionary to store marks of students with their names (name will be unique).
+
+Example:
+
+Input: 
+N = 5 
+names = [john, ala, ilia, sudan, mercy] 
+marks = [100, 200, 150, 80, 300]
+Output:
+ala 200 
+ilia 150 
+john 100 
+mercy 300 
+sudan 80
+
+Approach:
+1) Use dict[key] = value to create the dictionary.
+2) Use for loop to print the dictionary.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+"""
+
+def create_dict(arr):
+
+    dict = {}
+    for key, value in arr:
+        dict[key] = value
+    
+    return dict
+
+
+"""
+33. Problem: Intro to Dictionary
+GeeksForGeeks: https://www.geeksforgeeks.org/problems/intro-to-dictionary-python/1?page=2&category=python&sortBy=submissions
+
+Description:
+
+Given a list of strings containing names of students and another list containing marks of corresponding students. 
+The task is to create a dictionary to store marks of students with their names (name will be unique).
+
+Example:
+
+Input: 
+N = 5 
+names = [john, ala, ilia, sudan, mercy] 
+marks = [100, 200, 150, 80, 300]
+Output:
+ala 200 
+ilia 150 
+john 100 
+mercy 300 
+sudan 80
+
+Approach:
+1) Use dict[key] = value to create the dictionary.
+2) Use for loop to print the dictionary.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+"""
