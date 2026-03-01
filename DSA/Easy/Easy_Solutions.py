@@ -81,12 +81,94 @@ This demonstrates pointer manipulation and optimal space usage.
 **Problem** : Given the head of a linked list, determine if the linked list has a cycle in it.
 
 Approach: 
-1) Use a stack to keep track of opening brackets.
-2) For each character in the string:
-    - If it's an opening bracket, push it onto the stack.
-    - If it's a closing bracket, check if the stack is empty or the top of the stack doesn't match.
+1) Use two pointers, slow and fast.
+2) Move slow by one step and fast by two steps.
+3) If they meet, there's a cycle.
 
 Time Complexity: O(n)
 Space Complexity: O(n)
+"""
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    @staticmethod
+    def has_cycle(head):
+        if not head or not head.next:
+            return False
+        
+        slow = head
+        fast = head.next
+
+        while fast and fast.next:
+            if slow == fast:
+                return True
+            
+            slow = slow.next
+            fast = fast.next.next
+        
+        return False
+
+
+"""
+4) Binary Search : Google, Meta, Amazon, Apple
+
+**Theory** : Binary search works on sorted array, repeatedly dividing the search space in half. 
+It's the foundation for many optimization problems, Time complexity is O(logn) because we eliminate half the elements each iteration.
+
+---
+**Problem** : Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. 
+If target exists, then return its index. Otherwise, return -1.
+
+Approach: 
+1) Use two pointers, left and right.
+2) Find the middle element.
+3) If the middle element is the target, return its index.
+4) If the target is less than the middle element, move the right pointer to the left of the middle element.
+5) If the target is greater than the middle element, move the left pointer to the right of the middle element.
+
+Time Complexity: O(logn)
+Space Complexity: O(1)
+"""
+
+def binary_serach(nums, target):
+
+    left, right = 0, len(nums) - 1
+
+    while left <= right:
+        mid = left +(right - left) // 2
+
+        if nums[mid] == target:
+            return mid
+        elif nums[mid] < target:
+            left = mid + 1
+        else:
+            right = mid - 1
+    
+    return -1
+
+print(binary_serach([-1,0,3,5,9,12], 9))
+
+
+"""
+5)Merge Intervals : Google, Meta, Amazon, Microsoft
+
+**Theory** : Interval problems often require sorting first. Sorting by start time, we can process intervals linearly and merge overlapping ones. 
+This pattern appears in scheduling, resource allocation problems. [Greedy Approach]
+
+---
+**Problem** : You are given an array of non-overlapping intervals intervals where 
+intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. 
+You are also given an interval newInterval = [start, end] that represents the start and end of another interval.
+Insert newInterval into intervals such that intervals is still sorted in ascending order by starti 
+and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).
+
+Approach: 
+1) Use 
+
+Time Complexity: O(logn)
+Space Complexity: O(1)
 """
 
