@@ -66,3 +66,27 @@ def is_valid_paranthesis(s):
             stack.append(char)
     
     return True if not stack else False
+
+print(is_valid_paranthesis("()[]{}"))
+
+
+"""
+3) Linked List Cycle Detection : Microsoft, Amazon, Apple
+
+**Theory** : Floyd's Cycle Detection ( Tortoise and Hare) uses two pointers moving at different speeds. 
+If there's a cycle, the fast pointer will eventually meet the slow pointer. 
+This demonstrates pointer manipulation and optimal space usage.
+
+---
+**Problem** : Given the head of a linked list, determine if the linked list has a cycle in it.
+
+Approach: 
+1) Use a stack to keep track of opening brackets.
+2) For each character in the string:
+    - If it's an opening bracket, push it onto the stack.
+    - If it's a closing bracket, check if the stack is empty or the top of the stack doesn't match.
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+"""
+
