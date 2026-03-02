@@ -246,3 +246,45 @@ class TreeNode:
         return result
     
 
+"""
+7)Longest Substring without Repeating Characters : Amazon, Google, Meta, Bloomberg
+
+**Theory** : Sliding window is a pattern for substring/subarray problems. We maintain a window of vlid elements and expand/contract it. 
+Using a set or dictionary tracks seen characters for O(1) lookups.
+
+---
+**Problem** : Given a string s, find the length of the longest substring without repeating characters.
+
+Approach: 
+1) Use a set to keep track of seen characters.
+2) Use two pointers, left and right.
+3) Move the right pointer to the right until we see a repeating character.
+4) Move the left pointer to the right until we remove the repeating character.
+
+Time Complexity: O(n)
+Space Complexity: O(min(n,m))
+"""
+
+def length_of_longest_substring(s):
+  """
+  Time: O(n), Space: O(min(n,m)) where m is charset size
+  Sliding window to track seen characters
+  """
+  char_set = set()
+  left = 0
+  longest = 0
+
+  for right in range(len(s)):
+    # Shrink window until no duplicates
+    while s[right] in char_set:
+      char_set.remove(s[left])
+      left += 1
+
+    char_set.add(s[right])
+    longest = max(longest, right - left + 1)
+
+  return longest
+
+print(length_of_longest_substring("pwwkew"))
+print(length_of_longest_substring("abcabcbb"))
+print(length_of_longest_substring("bbbbb"))
