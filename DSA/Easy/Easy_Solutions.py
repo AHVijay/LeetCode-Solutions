@@ -205,10 +205,12 @@ tree traversals, and graph exploration. Unlike DFS(which uses a STACK), BFS expl
 **Problem** : Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
 
 Approach: 
-1) Use 
+1) Use a queue to keep track of nodes at each level.
+2) For each level, add the node values to the result.
+3) Add the left and right children of the current node to the queue.
 
-Time Complexity: 
-Space Complexity: 
+Time Complexity: O(n)
+Space Complexity: O(n)
 """
 
 from collections import deque
@@ -243,4 +245,4 @@ class TreeNode:
         
         return result
     
-    
+
