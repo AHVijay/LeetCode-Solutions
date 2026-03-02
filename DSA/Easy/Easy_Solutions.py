@@ -193,3 +193,54 @@ def merge_intervals(intervals):
     return merged
 
 print(merge_intervals([[1,3],[2,6],[8,10],[15,18]]))
+
+
+"""
+6)Binary Tree Level order Traversal : Amazon, Meta, Microsoft, Apple
+
+**Theory** : BFS(Breadth-First-Search) uses a QUEUE to visit nodes level by level. This is crucial for shortest path problems, 
+tree traversals, and graph exploration. Unlike DFS(which uses a STACK), BFS explores neighbors before going deeper.
+
+---
+**Problem** : Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+Approach: 
+1) Use 
+
+Time Complexity: 
+Space Complexity: 
+"""
+
+from collections import deque
+
+class TreeNode:
+    def __init__(self, val = 0, left = None, right = None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def level_order(self, root):
+        if not root:
+            return []
+        
+        result = []
+        queue = deque([root])
+
+        while queue:
+            level_size = len(queue)
+            cur_level = []
+
+            for _ in range(level_size):
+                node = queue.popleft()
+                cur_level.append(node.val)
+
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
+
+            result.append(cur_level)
+        
+        return result
+    
+    
