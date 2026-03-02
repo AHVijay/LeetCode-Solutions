@@ -159,16 +159,37 @@ print(binary_serach([-1,0,3,5,9,12], 9))
 This pattern appears in scheduling, resource allocation problems. [Greedy Approach]
 
 ---
-**Problem** : You are given an array of non-overlapping intervals intervals where 
-intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starti. 
+**Problem** : You are given an array of non-overlapping intervals where 
+intervals[i] = [starti, endi] represent the start and the end of the ith interval and intervals is sorted in ascending order by starting. 
 You are also given an interval newInterval = [start, end] that represents the start and end of another interval.
-Insert newInterval into intervals such that intervals is still sorted in ascending order by starti 
+Insert newInterval into intervals such that intervals is still sorted in ascending order by starting time,
 and intervals still does not have any overlapping intervals (merge overlapping intervals if necessary).
 
 Approach: 
-1) Use 
+1) Use two pointers, left and right.
+2) If the current interval ends before newInterval starts, add the current interval to the result.
+3) If the current interval starts after newInterval ends, add the newInterval to the result and set newInterval to the current interval.
+4) If the current interval overlaps with newInterval, merge them and update newInterval.
 
-Time Complexity: O(logn)
+Time Complexity: O(nlogn)
 Space Complexity: O(1)
 """
 
+def merge_intervals(intervals):
+
+    if not intervals:
+        return []
+    
+    intervals.sort(key=lambda x: x[0])
+    merged = intervals[0]
+
+    for current in intervals:
+        last = merged[-1]
+        if current[0] <= last:
+            merged[-1] = [last[0], max[(last[1], current[1])]]
+        else:
+            merged.append(current)
+    
+    return merged
+
+print(merge_intervals([[1,3],[2,6],[8,10],[15,18]]))
