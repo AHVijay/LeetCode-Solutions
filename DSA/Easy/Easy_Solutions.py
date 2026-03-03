@@ -320,3 +320,40 @@ def group_anagrams(strs):
     return list(ans.values())
 
 print(group_anagrams(["eat","tea","tan","ate","nat","bat"]))
+
+
+"""
+9) Climbing Stairs : Google, Amazon, Meta, Adobe
+
+**Theory** : Dynamic Programming breaks problems into overlapping subproblems. For Climbing Staris, 
+each position depends on previous states. We can reach step n from step n-1.
+---
+**Problem** : You are climbing a staircase. It takes n steps to reach the top. Each time you can either climb 1 or 2 steps. 
+In how many distinct ways can you climb to the top?
+
+Approach: 
+1) Use two variables to keep track of the previous two states.
+2) Iterate from 3 to n.
+3) The current state is the sum of the previous two states.
+4) Return the final state.
+
+Time Complexity: O(n)
+Space Complexity: O(1)
+"""
+
+def climb_staris(n):
+    if n <= 2:
+        return n
+    
+    prev2 = 1
+    prev1 = 2
+
+    for i in range(3, n + 1):
+        cur = prev1 + prev2
+        prev2 = prev1
+        prev1 = cur
+    
+    return prev1
+
+print(climb_staris(5))
+
