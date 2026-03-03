@@ -357,3 +357,37 @@ def climb_staris(n):
 
 print(climb_staris(5))
 
+
+"""
+10) Maximum Subarray (Kadane's Algorithm) : Amazon, Microsoft, Google, Meta
+
+**Theory** : Kadane's algorithm finds maximum sum subarray in linear time. Key insight: at each position, 
+decide whether to extend current subarray or start fresh. If current sum becomes negative, it can't help future subarrays.
+---
+**Problem** : Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+Approach: 
+1) Use two variables to keep track of the current sum and the maximum sum.
+2) Iterate through the array.
+3) At each position, update the current sum by adding the current element.
+4) Update the maximum sum if the current sum is greater than the maximum sum.
+
+Time Complexity: O(n)
+Space Complexity: O(1)
+"""
+
+def max_subarray(nums):
+  """
+  Time: O(n), Space: O(1)
+  Kadane's algorithm to find maximum sum subarray
+  """
+  max_sum = current_sum = nums[0]
+
+  for num in nums[1:]:
+    # Either extend current subarray or start new one
+    current_sum = max(num, current_sum + num)
+    max_sum = max(max_sum, current_sum)
+
+  return max_sum
+
+print(max_subarray([5,4,-1,7,8]))
