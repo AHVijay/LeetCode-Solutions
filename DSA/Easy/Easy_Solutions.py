@@ -288,3 +288,35 @@ def length_of_longest_substring(s):
 print(length_of_longest_substring("pwwkew"))
 print(length_of_longest_substring("abcabcbb"))
 print(length_of_longest_substring("bbbbb"))
+
+
+"""
+8) Group Anagrams : Amazon, Meta, Uber, Meta
+
+**Theory** : Anagrams have identical character frequencies, Sorting creates a conical form for grouping. 
+Using sorted strings as dictionary keys groups anagrams together in O(n*k log k) time, where k is average string length.
+
+---
+**Problem** : Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+Approach: 
+1) Use a dictionary to group anagrams.
+2) For each string, sort the string and use it as a key.
+3) Append the string to the list of values for the key.
+
+Time Complexity: O(nklogk)
+Space Complexity: O(nk)
+"""
+
+from collections import defaultdict
+def group_anagrams(strs):
+
+    ans = defaultdict(list)
+
+    for word in strs:
+        key = "".join(sorted(word))
+        ans[key].append(word)
+
+    return list(ans.values())
+
+print(group_anagrams(["eat","tea","tan","ate","nat","bat"]))
