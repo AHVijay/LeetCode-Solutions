@@ -391,3 +391,22 @@ def max_subarray(nums):
   return max_sum
 
 print(max_subarray([5,4,-1,7,8]))
+
+
+"""
+11) Coin Challenge: Google, Bloomberg, Amazon, Meta
+
+**Theory** : Classic DP problem demonstrating optimal substructure. To make amount n, 
+try each coin and take minimum of (amount - coin_value). Build solution bottom-up from 0 to target.
+---
+**Problem** : Given an array of coins[] of size n and a target value sum, where coins[i] represent the coins of different denominations. 
+You have an infinite supply of each of the coins. The task is to find the minimum number of coins required to make the given value sum. 
+If it is not possible to form the sum using the given coins, return -1.
+
+Approach: 
+1) Use 
+
+Time Complexity: 
+Space Complexity: 
+"""
+
