@@ -404,9 +404,44 @@ You have an infinite supply of each of the coins. The task is to find the minimu
 If it is not possible to form the sum using the given coins, return -1.
 
 Approach: 
-1) Use 
+1) Use a dynamic programming array to keep track of the minimum number of coins required to make each amount.
+2) Iterate through the array.
+3) At each position, update the minimum number of coins required to make the current amount.
+4) Return the minimum number of coins required to make the target amount.
 
-Time Complexity: 
-Space Complexity: 
+Time Complexity: O(n*sum)
+Space Complexity: O(sum)
 """
 
+def coin_change(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+
+    for coin in coins:
+        for x in range(coin, amount + 1):
+            dp[x] = min(dp[x], dp[x - coin] + 1)
+
+    return dp[amount] if dp[amount] != float('inf') else -1
+
+coin_change([25,10,5],30)
+
+"""
+Approach 2: 
+1) Use a dynamic programming array to keep track of the minimum number of coins required to make each amount.
+2) Iterate through the array.
+3) At each position, update the minimum number of coins required to make the current amount.
+
+Time Complexity: O(n*sum)
+Space Complexity: O(sum)
+"""
+
+def coin_change(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if coin <= i:
+                dp[i] = min(dp[i], 1 + dp[i - coin])
+
+    return dp[amount] if dp[amount] != float('inf') else -1
