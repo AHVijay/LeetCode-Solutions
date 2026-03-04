@@ -445,3 +445,30 @@ def coin_change(coins, amount):
                 dp[i] = min(dp[i], 1 + dp[i - coin])
 
     return dp[amount] if dp[amount] != float('inf') else -1
+
+
+"""
+12) Palindrome Number : Amazon, Microsoft, Bloomberg, Apple
+
+**Theory** : A palindrome reads the same forwards and backwards. For numbers, we can reverse the digits and compare. 
+---
+**Problem** : Given an integer x, return true if x is a palindrome, and false otherwise.
+
+Example 1:
+
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+Example 2:
+
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+
+Approach: 
+1) Use 
+
+Time Complexity: 
+Space Complexity: 
+"""
+
