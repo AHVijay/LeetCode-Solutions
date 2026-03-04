@@ -466,9 +466,40 @@ Output: false
 Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
 
 Approach: 
-1) Use 
+1) Use two pointers to compare the digits from the left and right.
+2) If the digits are not equal, return False.
 
-Time Complexity: 
-Space Complexity: 
+Time Complexity: O(n)
+Space Complexity: O(1)
 """
 
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0:
+            return False
+        return str(x) == str(x)[::-1]
+    
+Solution().isPalindrome(121)
+
+"""
+Approach 2: 
+1) Use a variable to store the reverse of the number.
+2) Compare the reverse of the number with the original number.
+3) If the reverse of the number is equal to the original number, return True.
+
+Time Complexity:  O(n)
+Space Complexity: O(1)
+"""
+
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        if x < 0:
+            return False
+        rev = 0
+        temp = x
+        while temp > 0:
+            rev = rev * 10 + temp % 10
+            temp = temp // 10
+        return x == rev
+    
+Solution().isPalindrome(121)
