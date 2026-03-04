@@ -466,8 +466,8 @@ Output: false
 Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
 
 Approach: 
-1) Use two pointers to compare the digits from the left and right.
-2) If the digits are not equal, return False.
+1) Convert the number to a string.
+2) Compare the string with its reverse.
 
 Time Complexity: O(n)
 Space Complexity: O(1)
