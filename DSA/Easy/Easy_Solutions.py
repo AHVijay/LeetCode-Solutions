@@ -503,3 +503,19 @@ class Solution:
         return x == rev
     
 Solution().isPalindrome(121)
+
+"""
+13) 
+
+**Theory** : 
+---
+**Problem** : 
+
+
+Approach: 
+1) Use
+
+Time Complexity: 
+Space Complexity: 
+"""
+
